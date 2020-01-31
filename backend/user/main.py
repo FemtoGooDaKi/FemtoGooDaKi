@@ -11,11 +11,11 @@ app = Flask(__name__)
 def user_detail():
     from user.detail import get_user_detail
 
-    user_id = request.form.get('userId', None)
-    if user_id is None:
-        response = flask.Response('please provide userId', status=400)
+    username = request.form.get('username', None)
+    if username is None:
+        response = flask.Response('please provide username', status=400)
     else:
-        result = get_user_detail(user_id)
+        result = get_user_detail(username)
         response = jsonify(result)
 
     return response

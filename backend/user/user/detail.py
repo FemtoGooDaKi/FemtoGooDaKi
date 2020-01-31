@@ -1,6 +1,6 @@
-def get_user_detail(user_id):
+def get_user_detail(username):
     result = {
-        'id': user_id,
+        'username': username,
         'firstName': 'Chain',
         'lastName': 'Sripilaipong',
         'birthDate': '1998-07-25',
