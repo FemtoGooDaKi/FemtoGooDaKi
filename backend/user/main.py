@@ -34,30 +34,12 @@ def get_user_detail():
     return response
 
 
-def _register(register_data):
-    result = {
-        'id': 1234,
-        'status': 'success',
-    }
-
-    return result
-
-
-def get_user_register_data(form):
-    register_data = {}
-    for field in user_detail_fields:
-        if field == 'id':
-            continue
-
-        register_data[field] = form.get(field, None)
-
-    return register_data
-
-
 @app.route('/register', methods=['POST'])
-def register():
+def register_user():
+    from .register import get_user_register_data, register
+
     register_data = get_user_register_data(request.form)
-    response = _register(register_data)
+    response = register(register_data)
     return response
 
 
