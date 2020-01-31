@@ -3,6 +3,8 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 
+from .util import validate_token
+
 app = Flask(__name__)
 
 
@@ -24,8 +26,19 @@ def course_detail():
 def add_course():
     from .add_course import get_course_creation_data, add_course
 
-    creation_data = get_course_creation_data(request.form)
-    response = add_course(creation_data)
+    author = request.form.get('author', None)
+    token = request.form.get('token', None)
+
+    if author is None:
+        response = flask.Response('please provide author username', status=400)
+    elif token is None:
+        response = flask.Response('please provide token', status=400)
+    else:
+        if not validate_token(author, token):
+            response = flask.Response('invalid token', status=401)
+        else:
+            creation_data = get_course_creation_data(request.form)
+            response = add_course(creation_data)
     return response
 
 
