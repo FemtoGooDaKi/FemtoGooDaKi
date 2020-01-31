@@ -1,7 +1,7 @@
 import os
 import requests
 
-USER_URL = os.getenv('USER_ENDPOINT_URL')
+USER_URL = os.getenv('USER_ENDPOINT_URL').strip('/') + ':' + os.getenv('USER_ENDPOINT_PORT')
 
 course_detail_fields = [
     'id',

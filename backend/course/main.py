@@ -1,3 +1,4 @@
+import os
 import flask
 from flask import Flask
 from flask import jsonify
@@ -43,4 +44,4 @@ def add_course():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=os.getenv('COURSE_ENDPOINT_PORT'))

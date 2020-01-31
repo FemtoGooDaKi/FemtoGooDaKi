@@ -1,3 +1,4 @@
+import os
 import flask
 from flask import Flask
 from flask import jsonify
@@ -66,4 +67,4 @@ def validate_token():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=os.getenv('USER_ENDPOINT_PORT'))

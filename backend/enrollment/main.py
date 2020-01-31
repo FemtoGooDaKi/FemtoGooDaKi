@@ -1,3 +1,4 @@
+import os
 import flask
 from flask import Flask
 from flask import jsonify
@@ -34,4 +35,4 @@ def enroll():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=os.getenv('ENROLL_ENDPOINT_PORT'))
