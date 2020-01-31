@@ -3,4 +3,5 @@ course_detail_fields = [
     'courseName',
     'description',
     'job',
+    'author',
 ]
