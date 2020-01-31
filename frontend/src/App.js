@@ -9,7 +9,6 @@ export default function App() {
   return (
     <Router>
       <div>
-        <div>NAVBAR</div>
         <Switch>
           <Route path="/" exact>
             <div>HOMEPAGE</div>

@@ -2,7 +2,7 @@
 import React from 'react';
 import './LoginPage.css'
 import logo from './Logo.svg'; 
-export class LoginPage extends React.Component {
+export default class LoginPage extends React.Component {
   constructor(props) {
         super(props);
         this.state = {
@@ -23,7 +23,7 @@ export class LoginPage extends React.Component {
     return (
       <div className='login-page-container'>
          <div>
-            <img src={logo}/>
+            <img src={logo} alt=""/>
          </div>
          <div>
            <h1 className='header'>Log In to your account!</h1>
