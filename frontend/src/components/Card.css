@@ -1,0 +1,79 @@
+.my-collapse {
+  background-color: none !important;
+  width: 1358px !important;
+}
+
+.my-panel {
+  display: flex;
+  width: 1358px;
+  height: auto;
+  max-height: 5000;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  padding: 40px 40px;
+  flex-direction: column;
+  transition: all 1s;
+}
+
+.mycard.expanded {
+    max-height: 9999px;
+  }
+
+.mycard-image {
+  width: 261px;
+  height: 168px;
+  border-radius: 4px;
+  margin-right: 35px;
+}
+
+.mycard-title-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 562px;
+}
+
+.mycard-title {
+  font-family: Roboto;
+  font-size: 48px;
+  line-height: 56px;
+  display: flex;
+  align-items: center;
+  color: #484848;
+  margin-bottom: 16px;
+}
+
+.mycard-subtitle {
+  font-family: Montserrat;
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  color: #272424;
+}
+
+.mycard-chevron {
+  cursor: pointer;
+  height: 2em !important;
+  width: unset !important;
+  transition: 0s ease-out;
+  animation-fill-mode: forwards;
+}
+
+.mycard-chevron.expanded {
+  transform: rotate(180deg);
+}
+
+.mycard-expand-content {
+  display: none;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 1s;
+}
+
+.mycard-expanded-content {
+  max-height: 1000px !important;
+  display: block;
+}
