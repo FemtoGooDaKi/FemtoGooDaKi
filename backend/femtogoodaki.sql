@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on ¾. ¡.¾. 5 16:38:30 2020
+-- File generated with SQLiteStudio v3.2.1 on ¾. ¡.¾. 5 22:20:39 2020
 --
 -- Text encoding used: System
 --
@@ -113,7 +113,7 @@ CREATE TABLE Question (
     B          VARCHAR (255),
     C          VARCHAR (255),
     D          VARCHAR (255),
-    Answer     VARCHAR (255) 
+    Answer     VARCHAR (1) 
 );
 
 
@@ -159,7 +159,7 @@ CREATE TABLE SubjectKnowledges (
 
 -- Table: User
 CREATE TABLE User (
-    UserID   INTEGER      PRIMARY KEY
+    UserId   INTEGER      PRIMARY KEY
                           UNIQUE
                           NOT NULL,
     Name     VARCHAR (31),
