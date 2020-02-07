@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on ¾. ¡.¾. 5 22:20:39 2020
+-- File generated with SQLiteStudio v3.2.1 on È. ¡.¾. 7 09:43:57 2020
 --
 -- Text encoding used: System
 --
@@ -14,8 +14,7 @@ CREATE TABLE Course (
     Name            VARCHAR (63),
     Description     VARCHAR (255),
     Syllabus        VARCHAR (511),
-    CourseManagerId INTEGER       REFERENCES User (UserID) 
-                                  UNIQUE
+    CourseManagerId INTEGER       REFERENCES User (UserId) 
                                   NOT NULL,
     EnrollPrice     INTEGER,
     IsActive        BOOLEAN,
@@ -30,10 +29,8 @@ CREATE TABLE CourseSubjects (
                             UNIQUE
                             NOT NULL,
     CourseId        INTEGER REFERENCES Course (CourseId) 
-                            UNIQUE
                             NOT NULL,
     SubjectId       INTEGER REFERENCES Subject (SubjectId) 
-                            UNIQUE
                             NOT NULL,
     Sequence        INTEGER
 );
@@ -44,11 +41,9 @@ CREATE TABLE Enrollment (
     EnrollmentId  INTEGER PRIMARY KEY
                           UNIQUE
                           NOT NULL,
-    StudentId     INTEGER REFERENCES User (UserID) 
-                          UNIQUE
+    StudentId     INTEGER REFERENCES User (UserId) 
                           NOT NULL,
     CourseId      INTEGER REFERENCES Course (CourseId) 
-                          UNIQUE
                           NOT NULL,
     Price         INTEGER,
     PretestScore  FLOAT,
@@ -65,8 +60,7 @@ CREATE TABLE Knowledge (
     Version       INTEGER,
     Name          VARCHAR (63),
     Content       VARCHAR (255),
-    AuthorId      INTEGER       REFERENCES User (UserID) 
-                                UNIQUE
+    AuthorId      INTEGER       REFERENCES User (UserId) 
                                 NOT NULL,
     Price         INTEGER,
     PageCount     INTEGER,
@@ -80,7 +74,6 @@ CREATE TABLE Knowledge (
 -- Table: KnowledgeConnector
 CREATE TABLE KnowledgeConnector (
     KnowledgeSourceId INTEGER       REFERENCES Knowledge (KnowledgeId) 
-                                    UNIQUE
                                     NOT NULL,
     LinkOut           VARCHAR (255) 
 );
@@ -90,11 +83,9 @@ CREATE TABLE KnowledgeConnector (
 CREATE TABLE LabScore (
     LabScoreId  INTEGER  PRIMARY KEY
                          NOT NULL,
-    StudentId   INTEGER  REFERENCES User (UserID) 
-                         UNIQUE
+    StudentId   INTEGER  REFERENCES User (UserId) 
                          NOT NULL,
     KnowledgeId INTEGER  REFERENCES Knowledge (KnowledgeId) 
-                         UNIQUE
                          NOT NULL,
     IsPass      INTEGER,
     CreatedDate DATETIME,
@@ -125,6 +116,33 @@ CREATE TABLE Role (
     Name   VARCHAR (31) 
 );
 
+INSERT INTO Role (
+                     RoleId,
+                     Name
+                 )
+                 VALUES (
+                     1,
+                     'Course Manager'
+                 );
+
+INSERT INTO Role (
+                     RoleId,
+                     Name
+                 )
+                 VALUES (
+                     2,
+                     'Author'
+                 );
+
+INSERT INTO Role (
+                     RoleId,
+                     Name
+                 )
+                 VALUES (
+                     3,
+                     'Student'
+                 );
+
 
 -- Table: Subject
 CREATE TABLE Subject (
@@ -134,8 +152,7 @@ CREATE TABLE Subject (
     Name        VARCHAR (63),
     Description VARCHAR (255),
     Syllabus    VARCHAR (511),
-    AuthorId    INTEGER       UNIQUE
-                              NOT NULL
+    AuthorId    INTEGER       NOT NULL
                               REFERENCES User (UserId),
     CreatedDate DATETIME,
     UpdatedDate DATETIME
@@ -148,10 +165,8 @@ CREATE TABLE SubjectKnowledges (
                                UNIQUE
                                NOT NULL,
     SubjectId          INTEGER REFERENCES Subject (SubjectId) 
-                               UNIQUE
                                NOT NULL,
     KnowledgeId        INTEGER REFERENCES Knowledge (KnowledgeId) 
-                               UNIQUE
                                NOT NULL,
     Sequence           INTEGER
 );
@@ -159,7 +174,7 @@ CREATE TABLE SubjectKnowledges (
 
 -- Table: User
 CREATE TABLE User (
-    UserId   INTEGER      PRIMARY KEY
+    UserId   INTEGER      PRIMARY KEY AUTOINCREMENT
                           UNIQUE
                           NOT NULL,
     Name     VARCHAR (31),
@@ -169,7 +184,6 @@ CREATE TABLE User (
     Password VARCHAR (31) NOT NULL,
     RoleId   INTEGER      REFERENCES Role (RoleId) 
                           NOT NULL
-                          UNIQUE
 );
 
 
