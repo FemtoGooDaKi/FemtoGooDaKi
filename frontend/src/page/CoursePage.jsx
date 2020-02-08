@@ -1,0 +1,41 @@
+//Yoss
+import React from 'react';
+import './CoursePage.css'
+import img from './arduino.png'; 
+
+/*
+<CoursePage
+    imgUrl: string;
+    name: string
+    description: string
+    onStartCourse = (name) => any
+/>
+*/
+
+export default class CoursePage extends React.Component {
+  constructor(props) {
+        super(props);
+    }
+
+  render() {
+    const [imgUrl,name,description,onStartCourse] = this.props
+    return (
+      <div className='course-page-container'>
+         <div className ='startCourse'>
+            <div>
+                <img src={imgUrl} alt=""/>
+            </div>
+            <div>
+                <p className='header'>{name}</p>
+                <p className='header'>Course </p>
+                <button class ="startCourseButton" style = {{marginTop : 20}}>Start Course</button>  
+            </div>
+        </div>
+        <div className = "description">
+            <p style = {{fontSize : "2.5em" , marginBottom : 10}}>Description</p>
+            <p style = {{marginLeft : 100 , fontSize : "1.5em"}}>{description}</p>
+        </div>
+      </div>
+    );
+  }
+}
