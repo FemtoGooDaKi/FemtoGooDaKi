@@ -13,12 +13,8 @@ import img from './arduino.png';
 */
 
 export default class CoursePage extends React.Component {
-  constructor(props) {
-        super(props);
-    }
-
   render() {
-    const [imgUrl,name,description,onStartCourse] = this.props
+    const {imgUrl,name,description,onStartCourse} = this.props
     return (
       <div className='course-page-container'>
          <div className ='startCourse'>
@@ -28,7 +24,7 @@ export default class CoursePage extends React.Component {
             <div>
                 <p className='header'>{name}</p>
                 <p className='header'>Course </p>
-                <button class ="startCourseButton" style = {{marginTop : 20}}>Start Course</button>  
+                <button class ="startCourseButton" style = {{marginTop : 20}} onClick={onStartCourse(name)}>Start Course</button>  
             </div>
         </div>
         <div className = "description">
