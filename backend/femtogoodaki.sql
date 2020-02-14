@@ -1,5 +1,5 @@
 --
--- File generated with SQLiteStudio v3.2.1 on ?. ?.?. 14 19:42:59 2020
+-- File generated with SQLiteStudio v3.2.1 on ?. ?.?. 14 19:49:04 2020
 --
 -- Text encoding used: System
 --
@@ -58,7 +58,7 @@ INSERT INTO Course (
                    )
                    VALUES (
                        1300002,
-                       'SE by tun',
+                       'Horoscope',
                        '[closed]',
                        '-',
                        100002,
