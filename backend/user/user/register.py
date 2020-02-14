@@ -3,7 +3,7 @@ from .util import user_detail_fields
 
 def register(register_data):
     result = {
-        'id': 1234,
+        'username': register_data['username'],
         'status': 'success',
     }
 
