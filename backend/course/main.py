@@ -1,3 +1,4 @@
+import sys
 import os
 import flask
 from flask import Flask
@@ -44,4 +45,12 @@ def add_course():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=os.getenv('COURSE_ENDPOINT_PORT'))
+    if len(sys.argv) > 1:
+        port = sys.argv[1]
+    elif os.getenv('COURSE_ENDPOINT_PORT'):
+        port = os.getenv('COURSE_ENDPOINT_PORT')
+    else:
+        port = 3000
+
+    print('running at port:', port)
+    app.run(host='0.0.0.0', port=port)
