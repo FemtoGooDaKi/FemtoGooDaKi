@@ -1,3 +1,4 @@
+import sys
 import os
 import flask
 from flask import Flask
@@ -23,6 +24,20 @@ def course_detail():
     return response
 
 
+@app.route('/search', methods=['GET'])
+def search():
+    from course.search import search_courses
+
+    keyword = request.args.get('keyword', None)
+    last_id = request.args.get('lastId', None)
+    if keyword is None:
+        response = flask.Response('please enter a keyword', status=400)
+    else:
+        response = search_courses(keyword, last_id)
+
+    return response
+
+
 @app.route('/addCourse', methods=['POST'])
 def add_course():
     from course.add_course import get_course_creation_data, add_course
@@ -44,4 +59,12 @@ def add_course():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=os.getenv('COURSE_ENDPOINT_PORT'))
+    if len(sys.argv) > 1:
+        port = sys.argv[1]
+    elif os.getenv('COURSE_ENDPOINT_PORT'):
+        port = os.getenv('COURSE_ENDPOINT_PORT')
+    else:
+        port = 3000
+
+    print('running at port:', port)
+    app.run(host='0.0.0.0', port=port)

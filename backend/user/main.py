@@ -48,23 +48,5 @@ def login():
     return response
 
 
-@app.route('/validateToken', methods=['POST'])
-def validate_token():
-    from user.login import validate_token
-
-    username = request.form.get('username', None)
-    token = request.form.get('token', None)
-
-    if username is None:
-        response = flask.Response('please provide username', status=400)
-    elif token is None:
-        response = flask.Response('no token to validate', status=400)
-    else:
-        result, status_code = validate_token(username, token)
-        response = jsonify(result), status_code
-
-    return response
-
-
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=os.getenv('USER_ENDPOINT_PORT'))
