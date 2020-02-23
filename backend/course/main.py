@@ -24,6 +24,20 @@ def course_detail():
     return response
 
 
+@app.route('/search', methods=['GET'])
+def search():
+    from course.search import search_courses
+
+    keyword = request.args.get('keyword', None)
+    last_id = request.args.get('lastId', None)
+    if keyword is None:
+        response = flask.Response('please enter a keyword', status=400)
+    else:
+        response = search_courses(keyword, last_id)
+
+    return response
+
+
 @app.route('/addCourse', methods=['POST'])
 def add_course():
     from course.add_course import get_course_creation_data, add_course
