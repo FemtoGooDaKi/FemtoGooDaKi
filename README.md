@@ -14,6 +14,7 @@ folders are according to package
 **Course Service**
   - detail
   - addCourse
+  - search
 
 **Enrollment Service**
   - enroll
