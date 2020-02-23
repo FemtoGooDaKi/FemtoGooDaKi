@@ -11,17 +11,17 @@ folders are according to package
   - register
   - login
 
+**Course Service**
+  - detail
+  - addCourse
+  - search
+
 Run locally with docker:
 ```
 docker build -t femtogoodaki-backend-course backend/course
 docker run -p PORT:PORT -it femtogoodaki-backend-course PORT
 ```
 replace `PORT` with your custom port
-
-**Course Service**
-  - detail
-  - addCourse
-  - search
 
 **Enrollment Service**
   - enroll
