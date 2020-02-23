@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import DummyPage from './page/DummyPage/DummyPage'
 
 export default function App() {
   return (
@@ -32,6 +33,10 @@ export default function App() {
 
           <Route path="/course/:id/test">
             <div>Page to show when the user PreTest or PostTest</div>
+          </Route>
+
+          <Route path="/testing">
+            <DummyPage>Page to show when the user PreTest or PostTest</DummyPage>
           </Route>
         </Switch>
       </div>

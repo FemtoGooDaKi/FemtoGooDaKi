@@ -24,7 +24,7 @@ imgUrl={"https://image.freepik.com/free-photo/modern-glass-desk-interior-with-co
 expandedElement={<div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div></div>}
 /> */
 
-export default class Card extends Component {
+export class Card extends Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -12,7 +12,7 @@ import img from './arduino.png';
 />
 */
 
-export default class CoursePage extends React.Component {
+export class CoursePage extends React.Component {
   constructor(props) {
         super(props);
     }

@@ -29,7 +29,7 @@ Props
 />
 */
 
-export default class Navbar extends Component {
+export class Navbar extends Component {
     handleInputKeyDown = (e) => {
         if (e.keyCode !== 13) return;
         this.props.handleSearch(e.target.value);
