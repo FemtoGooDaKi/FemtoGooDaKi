@@ -10,7 +10,6 @@ folders are according to package
   - detail
   - register
   - login
-  - validateToken
 
 **Course Service**
   - detail
