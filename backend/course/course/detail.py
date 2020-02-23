@@ -9,13 +9,13 @@ def get_course_detail(course_id):
         {
             'id': '2222',
             'knowledgeName': 'DummyKnowledge2',
-            'description': 'This is A Dummy Knowledge 1. Id 2222',
+            'description': 'This is A Dummy Knowledge 2. Id 2222',
             'author': 'chain',
         },
         {
             'id': '3333',
             'knowledgeName': 'DummyKnowledge3',
-            'description': 'This is A Dummy Knowledge 1. Id 3333',
+            'description': 'This is A Dummy Knowledge 3. Id 3333',
             'author': 'kevin',
         },
     ]
