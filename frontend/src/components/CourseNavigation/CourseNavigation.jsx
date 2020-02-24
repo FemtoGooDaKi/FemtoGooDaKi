@@ -9,7 +9,7 @@ interface ICourseNavigationProps {
 }
 */
 
-export default class CourseNavigation extends Component {
+export class CourseNavigation extends Component {
     render() {
         return (
             <div className='coursenav-container'>
