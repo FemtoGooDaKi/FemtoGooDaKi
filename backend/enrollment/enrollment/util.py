@@ -1,8 +1,3 @@
-import os
-import requests
-
-USER_URL = os.getenv('USER_ENDPOINT_URL').strip('/') + ':' + os.getenv('USER_ENDPOINT_PORT')
-
 course_detail_fields = [
     'id',
     'courseName',
@@ -12,11 +7,5 @@ course_detail_fields = [
 
 
 def validate_token(username, token):
-    url = USER_URL.strip('/') + '/validateToken'
-    data = {
-        'username': username,
-        'token': token,
-    }
-
-    resp = requests.post(url, data=data)
-    return resp.status_code == 200
+    if token == 'login-token':
+        return True

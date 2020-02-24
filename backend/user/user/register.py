@@ -3,7 +3,7 @@ from .util import user_detail_fields
 
 def register(register_data):
     result = {
-        'id': 1234,
+        'username': register_data['username'],
         'status': 'success',
     }
 
@@ -13,7 +13,7 @@ def register(register_data):
 def get_user_register_data(form):
     register_data = {}
     for field in user_detail_fields:
-        if field == 'id':
+        if field not in ('id', 'registerDate'):
             continue
 
         register_data[field] = form.get(field, None)
