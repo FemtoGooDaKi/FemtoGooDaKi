@@ -1,5 +1,7 @@
 const defaultStore = {
-	login: false
+	login: false,
+	searchKeyword: '',
+	userId: '',
 }
 
 const femtoApp = (state = defaultStore, action) => {
@@ -9,6 +11,16 @@ const femtoApp = (state = defaultStore, action) => {
 			return {
 				...state,
 				login: action.login
+			}
+		case 'SET_SEARCH_KEYWORD':
+			return {
+				...state,
+				searchKeyword: action.searchKeyword
+			}
+		case 'SET_USERID':
+			return {
+				...state,
+				userId: action.userId
 			}
 		default:
 			return state

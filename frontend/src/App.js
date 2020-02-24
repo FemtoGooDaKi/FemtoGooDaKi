@@ -20,7 +20,11 @@ export default function App() {
           </Route>
 
           <Route path="/search" exact>
-            <div>Page to show when unauthorised user want to search for course</div>
+            <div>Page to show when user want to search for course</div>
+          </Route>
+
+          <Route path="/career" exact>
+            <div>Career</div>
           </Route>
 
           <Route path="/course/:id">
@@ -33,6 +37,10 @@ export default function App() {
 
           <Route path="/course/:id/test">
             <div>Page to show when the user PreTest or PostTest</div>
+          </Route>
+
+          <Route path="/addcourse" exact>
+            <div>Add Course</div>
           </Route>
 
           <Route path="/testing">
