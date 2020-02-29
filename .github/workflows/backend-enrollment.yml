@@ -31,7 +31,7 @@ jobs:
         gcloud auth configure-docker
     - name: Build
       run: |
-        cd backend/course        
+        cd backend/enrollment        
         docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
