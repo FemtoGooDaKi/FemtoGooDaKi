@@ -14,7 +14,10 @@ export default function App() {
         <Switch>
           <Route path="/" exact>
             <div>HOMEPAGE</div>
-            <LoginPage/>
+          </Route>
+
+          <Route path="/login" exact>
+            <LoginPage/ >
           </Route>
 
           <Route path="/mycourse" exact>

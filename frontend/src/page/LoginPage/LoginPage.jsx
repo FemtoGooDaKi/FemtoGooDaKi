@@ -5,6 +5,8 @@ import logo from "./Logo.svg";
 import { connect } from "react-redux";
 import { setLoginFlag } from "../../actions";
 import { Redirect } from 'react-router-dom'
+import axios from 'axios';
+import qs from 'qs';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -12,24 +14,42 @@ class LoginPage extends React.Component {
     this.state = {
       username: "",
       password: "",
-      redirect: null
+      redirect: null,
+      showError: false,
     };
   }
 
-  handleInputChange = e => {
-    //doSomeThings
+  handleBackButton = () => {
+    this.setState({redirect : '/'})
   };
 
-  handleBackButton = () => {
-    alert("Pressed");
-  };
+  showError = () => {
+    this.setState({showError: true});
+  }
 
   handleLoginButton = () => {
-     setLoginFlag(true);
-     this.setState({redirect : '/mycourse'})
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    console.log('username', username);
+    console.log('password', password);
+    const data = {
+      username: username,
+      password: password
+    }
+    axios.post('http://localhost:5000/login', qs.stringify(data))
+    .then(response => {
+      console.log(response);
+      setLoginFlag(true);
+      this.setState({redirect : '/mycourse'})
+    })
+    .catch(error => {
+      console.log(error);
+      this.setState({showError: true});
+    });
   }
 
   render() {
+    const {showError} = this.state;
     if (this.state.redirect) {
        return <Redirect to={this.state.redirect} />
     }
@@ -42,14 +62,14 @@ class LoginPage extends React.Component {
           <div>
             <h1 className="header">Log In to your account!</h1>
             <input
+              id="username"
               name="username"
               placeholder="Username"
-              onChange={e => this.handleInputChange(e)}
             />
             <input
+              id="password"
               name="password"
               placeholder="Password"
-              onChange={e => this.handleInputChange(e)}
               type="password"
             />
             <div>
@@ -60,6 +80,7 @@ class LoginPage extends React.Component {
                 LOG IN
               </button>
             </div>
+            {showError && <div>Wrong Username/Password!</div>}
           </div>
         </div>
       );
