@@ -12,13 +12,18 @@ import img from './arduino.png';
 />
 */
 
-export class CoursePage extends React.Component {
+export default class CoursePage extends React.Component {
   constructor(props) {
         super(props);
+        console.log(this.props)
     }
 
   render() {
-    const [imgUrl,name,description,onStartCourse] = this.props
+    const imgUrl = this.props.imgUrl
+    const name = this.props.name
+    const description = this.props.description
+    const onStartCourse = this.props.onStartCourse
+    console.log(imgUrl)
     return (
       <div className='course-page-container'>
          <div className ='startCourse'>

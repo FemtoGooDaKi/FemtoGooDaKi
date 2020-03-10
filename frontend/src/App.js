@@ -4,8 +4,9 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import LoginPage from './page/LoginPage/LoginPage'
+import CoursePage from './page/CoursePage/CoursePage'
 import DummyPage from './page/DummyPage/DummyPage'
-
 export default function App() {
   return (
     <Router>
@@ -15,8 +16,17 @@ export default function App() {
             <div>HOMEPAGE</div>
           </Route>
 
+          <Route path="/login" exact>
+            <LoginPage/ >
+          </Route>
+
           <Route path="/mycourse" exact>
-            <div>Page to show when user login</div>
+            <CoursePage
+                imgUrl = 'https://i.imgur.com/mJM1gO1.jpg'
+                name =  "aukmate"
+                description = "!312"
+                onStartCourse = {(name)=>console.log(name)}
+            />
           </Route>
 
           <Route path="/search" exact>
