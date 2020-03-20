@@ -45,6 +45,7 @@ jobs:
       run: |
            echo Y | gcloud beta run deploy $SERVICE_NAME \
              --image $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA \
+             --region asia-northeast1 \
              --platform managed \
              --allow-unauthenticated
         
