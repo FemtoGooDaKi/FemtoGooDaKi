@@ -7,12 +7,15 @@ import {
 import LoginPage from './page/LoginPage/LoginPage'
 import CoursePage from './page/CoursePage/CoursePage'
 import DummyPage from './page/DummyPage/DummyPage'
+import Navbar from './components/Navbar/Navbar'
+
 export default function App() {
   return (
     <Router>
       <div>
         <Switch>
           <Route path="/" exact>
+            <Navbar/>
             <div>HOMEPAGE</div>
           </Route>
 
@@ -20,7 +23,13 @@ export default function App() {
             <LoginPage/ >
           </Route>
 
+
+          <Route path="/register" exact>
+            register page stub
+          </Route>
+
           <Route path="/mycourse" exact>
+            <Navbar/>
             <CoursePage
                 imgUrl = 'https://i.imgur.com/mJM1gO1.jpg'
                 name =  "aukmate"
@@ -53,8 +62,12 @@ export default function App() {
             <div>Add Course</div>
           </Route>
 
-          <Route path="/testing">
+          <Route path="/testing" exact>
             <DummyPage>Page to show when the user PreTest or PostTest</DummyPage>
+          </Route>
+
+          <Route path="/navbar" exacy>
+            <Navbar/>
           </Route>
         </Switch>
       </div>

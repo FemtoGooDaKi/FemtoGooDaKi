@@ -30,8 +30,6 @@ class LoginPage extends React.Component {
   handleLoginButton = () => {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    console.log('username', username);
-    console.log('password', password);
     const data = {
       username: username,
       password: password
@@ -39,7 +37,7 @@ class LoginPage extends React.Component {
     axios.post('http://localhost:5000/login', qs.stringify(data))
     .then(response => {
       console.log(response);
-      setLoginFlag(true);
+      this.props.setLoginFlag(true);
       this.setState({redirect : '/mycourse'})
     })
     .catch(error => {

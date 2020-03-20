@@ -1,75 +1,76 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faGraduationCap, faBook, faDesktop } from '@fortawesome/free-solid-svg-icons'
+import { connect } from "react-redux";
+import { setSearchKeyword } from "../../actions";
 import './Navbar.css';
 
-/*
-Props
-- signedIn: Bool
-- handleSearch: (String) -> Void
-
-- handleSignIn: () -> Void
-- handleSignUp: () -> Void
-
-- handleHatButton: () -> Void
-- handleBookButton: () -> Void
-- handleScreenButton: () -> Void
-^^^ Rename these functions at line 56, 59, 62
-*/
-
-/*
-<Navbar
-    signedIn={true}
-    handleSearch={(keyword) => {console.log(keyword)}}
-    handleSignIn={() => {console.log('sign in')}}
-    handleSignUp={() => {console.log('sign up')}}
-    handleHatButton={() => {console.log('hat')}}
-    handleBookButton={() => {console.log('book')}}
-    handleScreenButton={() => {console.log('screen')}}
-/>
-*/
-
-export class Navbar extends Component {
+class Navbar extends Component {
     handleInputKeyDown = (e) => {
         if (e.keyCode !== 13) return;
-        this.props.handleSearch(e.target.value);
+        const keyword = e.target.value;
+        this.props.setSearchKeyword(keyword);
+        this.props.history.push('/search');
+    }
+
+    handleCareerButton = () => {
+        this.props.history.push('/career');
+    }
+
+    handleAddCourseButton = () => {
+        this.props.history.push('/addcourse');
+    }
+
+    handleMyCourseButton = () => {
+        this.props.history.push('/mycourse');
+    }
+
+    handleSignInButton = () => {
+        this.props.history.push('/login');
+    }
+
+    handleSignUpButton = () => {
+        // register page stub
+        this.props.history.push('/register');
     }
 
     render() {
+        const {login} = this.props;
         return (
-            <div className={'navbar-container' + (this.props.signedIn ? ' signed-in' : '')}>
+            <div className={'navbar-container' + (login ? ' signed-in' : '')}>
                 <div>
-                    <span className={'navbar-title' + (this.props.signedIn ? ' signed-in' : '')}>
+                    <span className={'navbar-title' + (login ? ' signed-in' : '')}>
                         F
                     </span>
                     <div className='navbar-textfield-container'>
                         <FontAwesomeIcon icon={faSearch}/>
                         <input
                         type='text'
-                        className={this.props.signedIn ? ' signed-in' : ''}
+                        className={login ? ' signed-in' : ''}
                         onKeyDown={this.handleInputKeyDown}
                         />
                     </div>
                 </div>
-                {this.props.signedIn &&
+                {login &&
                     <div className='navbar-menu-icon-container'>
-                        <span onClick={this.props.handleHatButton}> {/* TODO: Rename this function */}
+                        <span onClick={this.handleCareerButton}>
                             <FontAwesomeIcon icon={faGraduationCap}/>
                         </span>
-                        <span onClick={this.props.handleBookButton}> {/* TODO: Rename this function */}
+                        <span onClick={this.handleAddCourseButton}>
                             <FontAwesomeIcon icon={faBook}/>
                         </span>
-                        <span onClick={this.props.handleScreenButton}> {/* TODO: Rename this function */}
+                        <span onClick={this.handleMyCourseButton}>
                             <FontAwesomeIcon icon={faDesktop}/>
                         </span>
                     </div>
                 }
-                {!this.props.signedIn &&
+                {!login &&
                     <div className='navbar-sign-in-button-container'>
-                        <span onClick={this.props.handleSignUp}>
+                        <span onClick={this.handleSignUpButton}>
                             Sign Up
                         </span>
-                        <span onClick={this.props.handleSignIn}>
+                        <span onClick={this.handleSignInButton}>
                             Sign In
                         </span>
                     </div>
@@ -78,3 +79,17 @@ export class Navbar extends Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    console.log(state);
+    return {
+        searchKeyword: state.searchKeyword,
+        login: state.login,
+    }
+};
+
+const mapDispatchToProps = dispatch => ({
+    setSearchKeyword: (keyword) => dispatch(setSearchKeyword(keyword))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

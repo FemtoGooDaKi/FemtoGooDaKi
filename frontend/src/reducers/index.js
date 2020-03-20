@@ -5,7 +5,7 @@ const defaultStore = {
 }
 
 const femtoApp = (state = defaultStore, action) => {
-	console.log(state, action)
+	console.log('store',state, action)
 	switch (action.type) {
 		case 'SET_LOGIN':
 			return {
