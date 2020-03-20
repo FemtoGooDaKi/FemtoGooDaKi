@@ -45,7 +45,6 @@ jobs:
       run: |
            echo Y | gcloud beta run deploy $SERVICE_NAME \
              --image $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA \
-             --port 80 \
              --platform managed \
              --allow-unauthenticated
         
