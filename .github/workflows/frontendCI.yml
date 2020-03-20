@@ -43,8 +43,7 @@ jobs:
         
     - name: Deploy
       run: |
-           echo Y | gcloud beta
-           gcloud beta run deploy $SERVICE_NAME \
+           echo Y | gcloud beta run deploy $SERVICE_NAME \
              --image $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA \
              --platform managed \
              --allow-unauthenticated --port=80
