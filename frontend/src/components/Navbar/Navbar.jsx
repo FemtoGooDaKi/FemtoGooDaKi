@@ -10,7 +10,7 @@ class Navbar extends Component {
     handleInputKeyDown = (e) => {
         if (e.keyCode !== 13) return;
         const keyword = e.target.value;
-        this.setState({ keyword: keyword });
+        this.props.setSearchKeyword(keyword);
         this.props.history.push('/search');
     }
 
@@ -27,30 +27,32 @@ class Navbar extends Component {
     }
 
     handleSignInButton = () => {
-
+        this.props.history.push('/login');
     }
 
     handleSignUpButton = () => {
-
+        // register page stub
+        this.props.history.push('/register');
     }
 
     render() {
+        const {login} = this.props;
         return (
-            <div className={'navbar-container' + (this.isLoggedIn ? ' signed-in' : '')}>
+            <div className={'navbar-container' + (login ? ' signed-in' : '')}>
                 <div>
-                    <span className={'navbar-title' + (this.isLoggedIn ? ' signed-in' : '')}>
+                    <span className={'navbar-title' + (login ? ' signed-in' : '')}>
                         F
                     </span>
                     <div className='navbar-textfield-container'>
                         <FontAwesomeIcon icon={faSearch}/>
                         <input
                         type='text'
-                        className={this.isLoggedIn ? ' signed-in' : ''}
+                        className={login ? ' signed-in' : ''}
                         onKeyDown={this.handleInputKeyDown}
                         />
                     </div>
                 </div>
-                {this.isLoggedIn &&
+                {login &&
                     <div className='navbar-menu-icon-container'>
                         <span onClick={this.handleCareerButton}>
                             <FontAwesomeIcon icon={faGraduationCap}/>
@@ -63,7 +65,7 @@ class Navbar extends Component {
                         </span>
                     </div>
                 }
-                {!this.isLoggedIn &&
+                {!login &&
                     <div className='navbar-sign-in-button-container'>
                         <span onClick={this.handleSignUpButton}>
                             Sign Up
@@ -78,10 +80,13 @@ class Navbar extends Component {
     }
 }
 
-const mapStateToProps = state => ({
-    searchKeyword: state.keyword,
-    login: state.isLoggedIn,
-});
+const mapStateToProps = state => {
+    console.log(state);
+    return {
+        searchKeyword: state.searchKeyword,
+        login: state.login,
+    }
+};
 
 const mapDispatchToProps = dispatch => ({
     setSearchKeyword: (keyword) => dispatch(setSearchKeyword(keyword))
