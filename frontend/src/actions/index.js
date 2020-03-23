@@ -12,3 +12,8 @@ export const setSearchKeyword = keyword => ({
     type: 'SET_SEARCH_KEYWORD',
     searchKeyword: keyword,
 })
+
+export const setUsername = username => ({
+    type: 'SET_USERNAME',
+    username: username,
+})

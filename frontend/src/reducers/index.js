@@ -2,10 +2,11 @@ const defaultStore = {
 	login: false,
 	searchKeyword: '',
 	userId: '',
+	username: '',
 }
 
 const femtoApp = (state = defaultStore, action) => {
-	console.log('store',state, action)
+	// console.log('store',state, action)
 	switch (action.type) {
 		case 'SET_LOGIN':
 			return {
@@ -21,6 +22,11 @@ const femtoApp = (state = defaultStore, action) => {
 			return {
 				...state,
 				userId: action.userId
+			}
+		case 'SET_USERNAME':
+			return {
+				...state,
+				username: action.username
 			}
 		default:
 			return state

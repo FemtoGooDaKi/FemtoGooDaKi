@@ -3,7 +3,7 @@ import React from "react";
 import "./LoginPage.css";
 import logo from "./Logo.svg";
 import { connect } from "react-redux";
-import { setLoginFlag } from "../../actions";
+import { setLoginFlag, setUsername } from "../../actions";
 import { Redirect } from 'react-router-dom'
 import axios from 'axios';
 import qs from 'qs';
@@ -37,6 +37,7 @@ class LoginPage extends React.Component {
     axios.post('http://localhost:5000/login', qs.stringify(data))
     .then(response => {
       console.log(response);
+      this.props.setUsername(username);
       this.props.setLoginFlag(true);
       this.setState({redirect : '/mycourse'})
     })
@@ -91,7 +92,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setLoginFlag: (flag) => dispatch(setLoginFlag(flag))
+  setLoginFlag: (flag) => dispatch(setLoginFlag(flag)),
+  setUsername: (username) => dispatch(setUsername(username))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

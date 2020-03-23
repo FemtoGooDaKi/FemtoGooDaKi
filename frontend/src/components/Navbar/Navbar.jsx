@@ -81,7 +81,6 @@ class Navbar extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
         searchKeyword: state.searchKeyword,
         login: state.login,

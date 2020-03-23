@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import LoginPage from './page/LoginPage/LoginPage'
 import CoursePage from './page/CoursePage/CoursePage'
+import SearchResultPage from './page/SearchResultPage/SearchResultPage'
 import DummyPage from './page/DummyPage/DummyPage'
 import Navbar from './components/Navbar/Navbar'
 
@@ -39,7 +40,9 @@ export default function App() {
           </Route>
 
           <Route path="/search" exact>
-            <div>Page to show when user want to search for course</div>
+            {/* <div>Page to show when user want to search for course</div> */}
+            <Navbar />
+            <SearchResultPage/>
           </Route>
 
           <Route path="/career" exact>
