@@ -81,7 +81,7 @@ export class Card extends Component {
     );
     return (
       <Collapse
-        defaultActiveKey={["1"]}
+        defaultActiveKey={["0"]}
         onChange={() => this.callback(expanded)}
         className={"my-collapse " + className}
       >

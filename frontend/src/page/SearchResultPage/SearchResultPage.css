@@ -13,6 +13,7 @@
 
 .search-result-course {
     flex: 0 1 0;
+    margin-bottom: 20px;
 }
 
 .search-result-join {
