@@ -8,6 +8,7 @@ const { Panel } = Collapse;
 
 /*
 <Card
+    className: string;
     imgUrl: string;
     title: string
     titleElement: React.ReactNode
@@ -43,10 +44,10 @@ export class Card extends Component {
       titleElement,
       subtitle,
       buttonElement,
-      expandedElement
+      expandedElement,
+      className,
     } = this.props;
     const { expanded } = this.state;
-
     const header = (
       <div className={"mycard" + (expanded ? " expanded" : "")}>
         <div
@@ -82,7 +83,7 @@ export class Card extends Component {
       <Collapse
         defaultActiveKey={["1"]}
         onChange={() => this.callback(expanded)}
-        className={"my-collapse"}
+        className={"my-collapse " + className}
       >
         <Panel className={"my-panel"} header={header} key="1" showArrow={false}>
           {expandedElement}

@@ -1,11 +1,11 @@
 .my-collapse {
   background-color: none !important;
-  width: 1358px !important;
+  width: auto;
 }
 
 .my-panel {
   display: flex;
-  width: 1358px;
+  width: auto;
   height: auto;
   max-height: 5000;
   background: #ffffff;
@@ -60,6 +60,7 @@
   width: unset !important;
   transition: 0s ease-out;
   animation-fill-mode: forwards;
+  margin-left: 60px;
 }
 
 .mycard-chevron.expanded {
