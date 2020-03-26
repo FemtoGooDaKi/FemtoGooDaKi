@@ -35,6 +35,10 @@ def encode_jwt(data):
     return jwt.encode(data, SECRET_KEY, 'HS256')
 
 
+def decode_jwt_data(token):
+    return jwt.get_unverified_claims(token)
+
+
 def verify_jwt(token):
     try:
         claims = jwt.get_unverified_claims(token)
@@ -54,6 +58,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
