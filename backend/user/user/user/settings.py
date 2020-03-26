@@ -105,7 +105,7 @@ WSGI_APPLICATION = 'user.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 # [START db_setup]
-if os.getenv('CI', None):
+if os.getenv('PRODUCTION', None):
     # Running on production App Engine, so connect to Google Cloud SQL using
     # the unix socket at /cloudsql/<your-cloudsql-connection string>
     connection_name = 'femtogudaki:asia-northeast1:user-db'
