@@ -48,15 +48,15 @@ def delete_user(username):
 
 @csrf_exempt
 def user_endpoint(request, username):
-    data = JSONParser().parse(request)
     token = request.headers.get('Authorization', None)
-    if not token or not verify_jwt(token.split('.')):
+    if not token or not verify_jwt(token.split(' ')[1]):
         return HttpResponse(status=401)
 
     if request.method == 'GET':
         return get_user_detail(username)
 
     elif request.method == 'PUT':
+        data = JSONParser().parse(request)
         payload = decode_jwt_data(token)
         if payload.get('username', '') != username:
             return HttpResponse(status=401)
@@ -84,7 +84,7 @@ def login(request):
         return HttpResponse(status=401)
 
     payload = UserSerializer(obj).data
-    payload = {key: value for key, value in payload.items() if key in {'id', 'username'}}
+    payload = {key: value for key, value in payload.items() if key in {'username'}}
 
     token = encode_jwt(payload)
     response = HttpResponse(status=200)
@@ -99,6 +99,9 @@ def register(request):
 
     data = JSONParser().parse(request)
     data['registerDate'] = datetime.datetime.now().date()
+    data['password_hash'] = encode_password(data.get('password', ''))
+    del data['password']
+
     serializer = UserSerializer(data=data)
     if serializer.is_valid():
         serializer.save()

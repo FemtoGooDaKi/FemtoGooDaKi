@@ -27,7 +27,7 @@ SECRET_KEY = 'pe)s1_l*d=o51tzzq_vfqf5%op*+fk)&26h8^4nvg*65xhg36b'
 
 
 def encode_password(password):
-    result = hashlib.sha512(base64.b64encode(password + SECRET_KEY).encode('utf-8')).hexdigest()
+    result = hashlib.sha512(base64.b64encode((password + SECRET_KEY).encode('utf-8'))).hexdigest()
     return result
 
 
@@ -36,7 +36,7 @@ def encode_jwt(data):
 
 
 def decode_jwt_data(token):
-    return jwt.get_unverified_claims(token)
+    return jwt.get_unverified_claims(token.split(' ')[1])
 
 
 def verify_jwt(token):
