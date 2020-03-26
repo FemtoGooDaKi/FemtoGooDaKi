@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import base64
+import hashlib
+from jose import jwt
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,6 +24,26 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'pe)s1_l*d=o51tzzq_vfqf5%op*+fk)&26h8^4nvg*65xhg36b'
+
+
+def encode_password(password):
+    result = hashlib.sha512(base64.b64encode(password + SECRET_KEY).encode('utf-8')).hexdigest()
+    return result
+
+
+def encode_jwt(data):
+    return jwt.encode(data, SECRET_KEY, 'HS256')
+
+
+def verify_jwt(token):
+    try:
+        claims = jwt.get_unverified_claims(token)
+        data = jwt.decode(token, SECRET_KEY)
+    except Exception as e:
+        print(e)
+        return False
+    return claims == data
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
