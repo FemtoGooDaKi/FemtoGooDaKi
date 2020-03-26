@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.route('/detail', methods=['POST'])
 def user_detail():
-    from user.detail import get_user_detail
+    from user_back.detail import get_user_detail
 
     username = request.form.get('username', None)
     if username is None:
@@ -23,7 +23,7 @@ def user_detail():
 
 @app.route('/register', methods=['POST'])
 def register_user():
-    from user.register import get_user_register_data, register
+    from user_back.register import get_user_register_data, register
 
     register_data = get_user_register_data(request.form)
     response = register(register_data)
@@ -32,7 +32,7 @@ def register_user():
 
 @app.route('/login', methods=['POST'])
 def login():
-    from user.login import login
+    from user_back.login import login
 
     username = request.form.get('username', None)
     password = request.form.get('password', None)
