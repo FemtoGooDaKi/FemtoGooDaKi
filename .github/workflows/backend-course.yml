@@ -10,7 +10,7 @@ env:
   GITHUB_SHA: ${{ github.sha }}
   IMAGE: backend-course
   REGISTRY_HOSTNAME: asia.gcr.io
-  DEPLOYMENT_NAME: gke-test
+  SERVICE_NAME: femtogudaki-backend-course
   CI: true
 jobs:
   setup-build-publish:
@@ -39,3 +39,14 @@ jobs:
     - name: Publish
       run: |
         docker push $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
+        
+    - name: Deploy
+      run: |
+           echo Y | gcloud beta run deploy $SERVICE_NAME \
+             --image $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA \
+             --region asia-northeast1 \
+             --platform managed \
+             --project $GKE_PROJECT \
+             --port 8000 \
+             --allow-unauthenticated \
+             --update-env-vars PRODUCTION=1
