@@ -1,5 +1,6 @@
 import datetime
 from dateutil.relativedelta import relativedelta
+import dateutil.parser
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -17,7 +18,7 @@ def get_user_detail(username):
     data = serializer.data
     del data['password_hash']
 
-    data['age'] = relativedelta(datetime.datetime.now(), data['birthDate']).years
+    data['age'] = relativedelta(datetime.datetime.now(), dateutil.parser.parse(data['birthDate'])).years
 
     return JsonResponse(data)
 
