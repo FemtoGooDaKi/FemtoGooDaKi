@@ -1,4 +1,5 @@
 import datetime
+from dateutil.relativedelta import relativedelta
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
@@ -15,6 +16,9 @@ def get_user_detail(username):
     serializer = UserSerializer(obj)
     data = serializer.data
     del data['password_hash']
+
+    data['age'] = relativedelta(datetime.datetime.now(), data['birthDate']).years
+
     return JsonResponse(data)
 
 
@@ -26,13 +30,15 @@ def update_user_detail(username, data):
 
     if 'password_hash' in data:
         del data['password_hash']
+    if 'username' in data:
+        del data['username']
     serializer = UserSerializer(obj, data=data)
     if serializer.is_valid():
         serializer.save()
 
         data = serializer.data
         del data['password_hash']
-        return JsonResponse(data)
+        return HttpResponse(status=200)
     return JsonResponse(serializer.errors, status=400)
 
 
@@ -105,5 +111,5 @@ def register(request):
     serializer = UserSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
-        return JsonResponse(serializer.data, status=201)
+        return HttpResponse(status=201)
     return JsonResponse(serializer.errors, status=400)
