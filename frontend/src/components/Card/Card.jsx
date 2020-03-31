@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
 import { Collapse } from "antd";
 import "antd/dist/antd.css";
-import "./Card.css";
+import RandomPicture from '../RandomPicture/RandomPicture'
+import "./Card.scss";
 const { Panel } = Collapse;
 
 /*
@@ -34,12 +35,11 @@ export class Card extends Component {
   }
 
   callback(expanded) {
-    this.setState({expanded: !expanded})
+    this.setState({ expanded: !expanded });
   }
 
   render() {
     const {
-      imgUrl,
       title,
       titleElement,
       subtitle,
@@ -59,7 +59,8 @@ export class Card extends Component {
           }}
         >
           <div style={{ display: "flex" }}>
-            <img src={imgUrl} className={"mycard-image"} alt={"Error"} />
+            {/* <img src={imgUrl} className={"mycard-image"} alt={"Error"} /> */}
+            <RandomPicture className={"mycard-image"}/>
             <div className={"mycard-title-container"}>
               <div className={"mycard-title"}>
                 {title}
@@ -72,7 +73,7 @@ export class Card extends Component {
             {buttonElement}
             <FontAwesomeIcon
               icon={faChevronUp}
-              className={"mycard-chevron" + (expanded ? " expanded" : "") }
+              className={"mycard-chevron" + (expanded ? " expanded" : "")}
               onClick={() => this.setState({ expanded: !expanded })}
             />
           </div>

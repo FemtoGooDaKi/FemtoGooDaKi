@@ -1,0 +1,137 @@
+@import url("https://fonts.googleapis.com/css?family=Merriweather&display=swap");
+
+.login-page-container {
+  background-size: cover;
+  display: grid;
+  grid-template-rows: 25vh 400px calc(75vh - 400px);
+  grid-template-columns: 20% 395px;
+}
+
+.login-page-form-card {
+  grid-row-start: 1;
+  grid-row-start: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  height: 100%;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.22);
+  border-radius: 8px;
+}
+
+.login-page-logo {
+  grid-column-start: 4;
+  grid-column-end: 5;
+}
+
+.login-page-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+// .login-page-container > div {
+//   min-width: 400px;
+//   max-height: 40vh;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: column;
+//   justify-content: center;
+//   grid-column-start: 2;
+//   grid-column-end: 3;
+
+// > img {
+//   min-width: 400px;
+//   width: 70%;
+//   display: flex;
+//   align-items: center;
+//   flex-direction: column;
+// }
+// }
+
+.input-username {
+  margin-bottom: 16px;
+}
+
+.login-inputs{
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+} 
+
+input:focus {
+  outline: none;
+}
+
+.login-page-container > div > input {
+  font-size: 1.5em;
+  width: 80%;
+  margin: 10px 0;
+  padding: 4px 0;
+  padding-inline-start: 20px;
+  border-radius: 4px;
+  font-family: "Merriweather", serif;
+}
+
+.login-buttons {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.loginButton {
+  font-size: 1em;
+  margin: 8px 0;
+  padding: 6px 4px;
+  width: calc(25% - 5px);
+  background: linear-gradient(
+    90deg,
+    rgba(130, 68, 63, 1) 0%,
+    rgba(170, 93, 55, 1) 100%
+  );
+  border-radius: 4px;
+  border: none;
+  color: white;
+  font-weight: 500;
+  transition: 0.1s ease-in-out;
+  font-family: "Merriweather", serif;
+  &:hover {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.22);
+  }
+  &:focus {
+    outline: none !important;
+  }
+}
+
+.backButton {
+  font-size: 1em;
+  margin: 8px 0;
+  padding: 6px 4px;
+  margin-right: 20px;
+  width: calc(25% - 5px);
+  border-radius: 4px;
+  border: none;
+  color: black;
+  font-weight: 500;
+  transition: 0.1s ease-in-out;
+  font-family: "Merriweather", serif;
+  &:hover {
+    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.22);
+  }
+}
+
+.login-page-container > div > div {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login-header {
+  font-family: "Merriweather", serif;
+  font-size: 2em;
+  margin-bottom: 4px;
+}

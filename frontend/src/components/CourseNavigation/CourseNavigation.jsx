@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './CourseNavigation.css';
+import './CourseNavigation.scss';
 
 /*
 interface ICourseNavigationProps {

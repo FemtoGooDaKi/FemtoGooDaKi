@@ -25,6 +25,7 @@ export default class RandomImage extends Component {
 
     render() {
         return (
+            // eslint-disable-next-line
             <img
             className={this.props.className}
             src={ this.randomUrl() }

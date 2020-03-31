@@ -1,12 +1,14 @@
 //Yoss
 import React from "react";
-import "./LoginPage.css";
-import logo from "./Logo.svg";
+import "./LoginPage.scss";
 import { connect } from "react-redux";
 import { setLoginFlag, setUsername } from "../../actions";
-import { Redirect } from 'react-router-dom'
-import axios from 'axios';
-import qs from 'qs';
+import { Redirect } from "react-router-dom";
+import { Input, Card } from "antd";
+import axios from "axios";
+import qs from "qs";
+import bg1 from "./bg2.jpg";
+import { notification } from "antd";
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -15,17 +17,25 @@ class LoginPage extends React.Component {
       username: "",
       password: "",
       redirect: null,
-      showError: false,
+      showError: false
     };
   }
 
+  openLoginError = () => {
+    notification["error"]({
+      message: "Unable to log in",
+      description:
+        "Username or password does not match any account on our platform. Can you please try again?"
+    });
+  };
+
   handleBackButton = () => {
-    this.setState({redirect : '/'})
+    this.setState({ redirect: "/" });
   };
 
   showError = () => {
-    this.setState({showError: true});
-  }
+    this.setState({ showError: true });
+  };
 
   handleLoginButton = () => {
     const username = document.getElementById("username").value;
@@ -33,54 +43,88 @@ class LoginPage extends React.Component {
     const data = {
       username: username,
       password: password
-    }
-    axios.post('http://localhost:5000/login', qs.stringify(data))
-    .then(response => {
-      console.log(response);
-      this.props.setUsername(username);
-      this.props.setLoginFlag(true);
-      this.setState({redirect : '/mycourse'})
-    })
-    .catch(error => {
-      console.log(error);
-      this.setState({showError: true});
-    });
-  }
+    };
+    // axios
+    //   .post(
+    //     "https://femtogudaki-backend-user-op3ovi357a-an.a.run.app/login",
+    //     {
+    //       headers: { 'Content-Type': 'text/plain' }, data: data,
+    //     }
+    //   )
+    //   .then(response => {
+    //     console.log(response);
+    //     // this.props.setUsername(username);
+    //     // this.props.setLoginFlag(true);
+    //     // this.setState({ redirect: "/mycourse" });
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //     this.setState({ showError: true });
+    //     this.openLoginError();
+    //   });
+    const options = {
+      method: "POST",
+      headers: { "content-type": "text/plain" },
+      data: JSON.stringify(data),
+      url: "https://femtogudaki-backend-user-op3ovi357a-an.a.run.app/login/"
+    };
+    axios(options)
+      .then(response => {
+        console.log('response',response);
+        console.log(response.headers['authorization'])
+        // this.props.setUsername(username);
+        // this.props.setLoginFlag(true);
+        // this.setState({ redirect: "/mycourse" });
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ showError: true });
+        this.openLoginError();
+      });
+  };
 
   render() {
-    const {showError} = this.state;
+    const { showError } = this.state;
     if (this.state.redirect) {
-       return <Redirect to={this.state.redirect} />
-    }
-    else {
+      return <Redirect to={this.state.redirect} />;
+    } else {
       return (
-        <div className="login-page-container">
-          <div>
-            <img src={logo} alt="" />
-          </div>
-          <div>
-            <h1 className="header">Log In to your account!</h1>
-            <input
-              id="username"
-              name="username"
-              placeholder="Username"
-            />
-            <input
-              id="password"
-              name="password"
-              placeholder="Password"
-              type="password"
-            />
-            <div>
-              <button className="backButton" onClick={this.handleBackButton}>
-                BACK
-              </button>
-              <button className="loginButton" onClick={this.handleLoginButton}>
-                LOG IN
-              </button>
+        <div
+          style={{ backgroundImage: `url(${bg1})` }}
+          className="login-page-container"
+        >
+          <Card className="login-page-form-card">
+            <div className="login-page-form">
+              <h1 className="login-header">Log in to your account</h1>
+              <div className="login-inputs">
+                <div className="input-username">
+                  Username
+                  <Input id="username" size="large" placeholder="username" />
+                </div>
+                <div>
+                  Password
+                  <Input
+                    type="password"
+                    size="large"
+                    id="password"
+                    placeholder="password"
+                  />
+                </div>
+              </div>
+              <div className="login-buttons">
+                <button className="backButton" onClick={this.handleBackButton}>
+                  BACK
+                </button>
+                <button
+                  className="loginButton"
+                  onClick={this.handleLoginButton}
+                >
+                  LOG IN
+                </button>
+              </div>
+              {showError && <div>Wrong Username/Password!</div>}
             </div>
-            {showError && <div>Wrong Username/Password!</div>}
-          </div>
+          </Card>
         </div>
       );
     }
@@ -92,8 +136,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setLoginFlag: (flag) => dispatch(setLoginFlag(flag)),
-  setUsername: (username) => dispatch(setUsername(username))
+  setLoginFlag: flag => dispatch(setLoginFlag(flag)),
+  setUsername: username => dispatch(setUsername(username))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

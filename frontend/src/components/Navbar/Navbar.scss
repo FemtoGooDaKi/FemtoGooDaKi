@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15%;
+  background-color: white;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.12);
+  font-family: "Merriweather", serif;
+
+  &.signed-in {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 15%;
+    background-color: #353535;
+  }
+}
+
+.navbar-title {
+  font-size: 3.5em;
+  font-weight: 500;
+  line-height: 0.85em;
+  color: black;
+  margin-left: 8px;
+  margin-right: 20px;
+  cursor: pointer;
+
+  &.signed-in {
+    color: white;
+  }
+}
+
+.navbar-textfield-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center;
+
+  > svg {
+    margin: 0 6px 2px 0;
+    color: #d4d4d4;
+  }
+
+  input {
+    width: 400px;
+    border: none;
+    outline: none;
+    color: #424242;
+
+    &.signed-in {
+      background-color: #353535;
+      color: #d4d4d4;
+    }
+  }
+}
+
+.navbar-container > div {
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.navbar-menu-icon-container > span {
+  font-size: 2em;
+  margin: 0 20px;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.navbar-sign-in-button-container > span {
+  font-size: 1.5em;
+  color: #484848;
+  margin: 0 16px;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
