@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import HomePage from './page/HomePage/HomePage';
 import LoginPage from './page/LoginPage/LoginPage'
+import RegisterPage from './page/RegisterPage/RegisterPage'
 import CoursePage from './page/CoursePage/CoursePage'
 import SearchResultPage from './page/SearchResultPage/SearchResultPage'
 import DummyPage from './page/DummyPage/DummyPage'
@@ -23,12 +24,12 @@ export default function App() {
           </Route>
 
           <Route path="/login" exact>
-            <LoginPage/ >
+            <LoginPage/>
           </Route>
 
 
           <Route path="/register" exact>
-            register page stub
+            <RegisterPage/>
           </Route>
 
           <Route path="/mycourse" exact>
