@@ -1,0 +1,35 @@
+.coursenav-container {
+  background-color: rgba(196, 196, 196, 0.25);
+  height: 100%;
+  user-select: none;
+}
+
+.coursenav-name {
+  text-align: center;
+  font-size: 28px;
+  padding: 44px 0;
+}
+
+.coursenav-separator {
+  height: 2px;
+  background-color: #d4d4d4;
+}
+
+.coursenav-subject-container {
+  font-size: 18px;
+}
+
+.coursenav-subject-name {
+  padding: 18px 0 18px 24px;
+  cursor: pointer;
+}
+
+.coursenav-subject-knowledge {
+  padding: 18px 0 18px 48px;
+  cursor: pointer;
+}
+
+.coursenav-subject-name:hover,
+.coursenav-subject-knowledge:hover {
+  background-color: rgba(196, 196, 196, 0.25);
+}

@@ -1,94 +1,127 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch, faGraduationCap, faBook, faDesktop } from '@fortawesome/free-solid-svg-icons'
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { Input, Popover } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGraduationCap, faDesktop } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
-import { setSearchKeyword } from "../../actions";
-import './Navbar.css';
+import {
+  SearchOutlined,
+  FileAddFilled,
+  ExportOutlined
+} from "@ant-design/icons";
+import { setSearchKeyword, setLoginFlag } from "../../actions";
+import "./Navbar.scss";
 
 class Navbar extends Component {
-    handleInputKeyDown = (e) => {
-        if (e.keyCode !== 13) return;
-        const keyword = e.target.value;
-        this.props.setSearchKeyword(keyword);
-        this.props.history.push('/search');
+  constructor(props) {
+    super(props);
+    if (localStorage.getItem("auth") !== null) {
+      props.setLoginFlag(true);
     }
+  }
 
-    handleCareerButton = () => {
-        this.props.history.push('/career');
-    }
+  handleInputKeyDown = e => {
+    if (e.keyCode !== 13) return;
+    console.log("enter");
+    const keyword = e.target.value;
+    this.props.setSearchKeyword(keyword);
+    this.props.history.push("/search");
+  };
 
-    handleAddCourseButton = () => {
-        this.props.history.push('/addcourse');
-    }
+  handleCareerButton = () => {
+    this.props.history.push("/career");
+  };
 
-    handleMyCourseButton = () => {
-        this.props.history.push('/mycourse');
-    }
+  handleAddCourseButton = () => {
+    this.props.history.push("/addcourse");
+  };
 
-    handleSignInButton = () => {
-        this.props.history.push('/login');
-    }
+  handleMyCourseButton = () => {
+    this.props.history.push("/mycourse");
+  };
 
-    handleSignUpButton = () => {
-        // register page stub
-        this.props.history.push('/register');
-    }
+  handleSignInButton = () => {
+    this.props.history.push("/login");
+  };
 
-    render() {
-        const {login} = this.props;
-        return (
-            <div className={'navbar-container' + (login ? ' signed-in' : '')}>
-                <div>
-                    <span className={'navbar-title' + (login ? ' signed-in' : '')}>
-                        F
-                    </span>
-                    <div className='navbar-textfield-container'>
-                        <FontAwesomeIcon icon={faSearch}/>
-                        <input
-                        type='text'
-                        className={login ? ' signed-in' : ''}
-                        onKeyDown={this.handleInputKeyDown}
-                        />
-                    </div>
-                </div>
-                {login &&
-                    <div className='navbar-menu-icon-container'>
-                        <span onClick={this.handleCareerButton}>
-                            <FontAwesomeIcon icon={faGraduationCap}/>
-                        </span>
-                        <span onClick={this.handleAddCourseButton}>
-                            <FontAwesomeIcon icon={faBook}/>
-                        </span>
-                        <span onClick={this.handleMyCourseButton}>
-                            <FontAwesomeIcon icon={faDesktop}/>
-                        </span>
-                    </div>
-                }
-                {!login &&
-                    <div className='navbar-sign-in-button-container'>
-                        <span onClick={this.handleSignUpButton}>
-                            Sign Up
-                        </span>
-                        <span onClick={this.handleSignInButton}>
-                            Sign In
-                        </span>
-                    </div>
-                }
-            </div>
-        );
-    }
+  handleSignUpButton = () => {
+    this.props.history.push("/register");
+  };
+
+  handleLogo = () => {
+    this.props.history.push("/");
+  };
+
+  handleLogout = () => {
+    localStorage.removeItem('auth');
+    this.props.setLoginFlag(false);
+    this.props.history.push("/");
+  }
+
+  render() {
+    const { login } = this.props;
+    return (
+      <div className={"navbar-container" + (login ? " signed-in" : "")}>
+        <div>
+          <span
+            className={"navbar-title" + (login ? " signed-in" : "")}
+            onClick={this.handleLogo}
+          >
+            F
+          </span>
+          <Input
+            size="large"
+            placeholder="Search for online courses"
+            prefix={<SearchOutlined />}
+            onKeyDown={this.handleInputKeyDown}
+            className="navbar-textfield-container"
+          />
+        </div>
+        {login && (
+          <div className="navbar-menu-icon-container">
+            <Popover placement="bottom" content="Career">
+              <span onClick={this.handleCareerButton}>
+                <FontAwesomeIcon icon={faGraduationCap} />
+              </span>
+            </Popover>
+            <Popover placement="bottom" content="Add new course">
+              <span onClick={this.handleAddCourseButton}>
+                <FileAddFilled />
+              </span>
+            </Popover>
+            <Popover placement="bottom" content="My Course">
+              <span onClick={this.handleMyCourseButton}>
+                <FontAwesomeIcon icon={faDesktop} />
+              </span>
+            </Popover>
+            <Popover placement="bottom" content="logout">
+              <span onClick={this.handleLogout}>
+                <ExportOutlined />
+              </span>
+            </Popover>
+          </div>
+        )}
+        {!login && (
+          <div className="navbar-sign-in-button-container">
+            <span onClick={this.handleSignUpButton}>Register</span>
+            <span onClick={this.handleSignInButton}>Log In</span>
+          </div>
+        )}
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {
-    return {
-        searchKeyword: state.searchKeyword,
-        login: state.login,
-    }
+  return {
+    searchKeyword: state.searchKeyword,
+    login: state.login
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
-    setSearchKeyword: (keyword) => dispatch(setSearchKeyword(keyword))
+  setLoginFlag: flag => dispatch(setLoginFlag(flag)),
+  setSearchKeyword: keyword => dispatch(setSearchKeyword(keyword))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

@@ -3,6 +3,7 @@
 import axios from 'axios';
 
 const baseUrl = 'https://femtogudaki-backend-user-op3ovi357a-an.a.run.app';
+const authToken = localStorage.getItem('auth');
 
 export const courseService = {
     /*
@@ -67,7 +68,7 @@ export const userService = {
     getUserDetail: (username, callback) => {
         const endpoint = '/user/' + username + '/';
         // TODO: Get auth token
-        const headers = { Authorization: 'AUTH TOKEN HERE' }
+        const headers = { Authorization: authToken }
         axios.get(baseUrl + endpoint, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
@@ -81,7 +82,7 @@ export const userService = {
     updateUserDetail: (username, params, callback) => {
         const endpoint = '/user/' + username + '/';
         // TODO: Get auth token
-        const headers = { Authorization: 'AUTH TOKEN HERE' }
+        const headers = { Authorization: authToken }
         axios.put(baseUrl + endpoint, params, { headers: headers })
             .then(response => callback(null))
             .catch(error => callback(error));
@@ -94,7 +95,7 @@ export const userService = {
     deleteUser: (username, callback) => {
         const endpoint = '/user/' + username + '/';
         // TODO: Get auth token
-        const headers = { Authorization: 'AUTH TOKEN HERE' }
+        const headers = { Authorization: authToken }
         axios.delete(baseUrl + endpoint, { headers: headers })
             .then(response => callback(null))
             .catch(error => callback(error));

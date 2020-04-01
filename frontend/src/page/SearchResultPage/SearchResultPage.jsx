@@ -3,7 +3,7 @@ import { Card } from "../../components/Card";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
-import "./SearchResultPage.css";
+import "./SearchResultPage.scss";
 
 class SearchResultPage extends React.Component {
   constructor(props) {
@@ -12,13 +12,41 @@ class SearchResultPage extends React.Component {
   }
 
   componentDidMount() {
+    this.fetchData(this.props.searchKeyword);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.searchKeyword !== prevProps.searchKeyword) {
+      this.fetchData(this.props.searchKeyword);
+    }
+  }
+
+  fetchData(keyword) {
+    //Example of Sending header
+    // const data = {
+    //   username: 'kevin'
+    // }
+    // const options = {
+    //   method: "GET",
+    //   headers: { "content-type": "application/json", "Authorization": localStorage.getItem('auth') },
+    //   data: JSON.stringify(data),
+    //   url: "https://femtogudaki-backend-user-op3ovi357a-an.a.run.app/user/kevin/"
+    // };
+    // axios(options)
+    //   .then(response => {
+    //     console.log(response)
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
     axios
-      .get("http://localhost:5000/search", {
+      .get("http://localhost:5001/search", {
         params: {
-          keyword: this.props.searchKeyword
+          keyword: keyword
         }
       })
       .then(response => {
+        console.log(response.data);
         this.setState({ searchResult: response.data });
       })
       .catch(function(error) {
@@ -26,7 +54,7 @@ class SearchResultPage extends React.Component {
       });
   }
 
-  handleJoin = (e) => {
+  handleJoin = e => {
     e.preventDefault();
     this.props.history.push(`/course/${e.target.id}`);
   };
@@ -42,7 +70,7 @@ class SearchResultPage extends React.Component {
           <div
             id={c.id}
             className="search-result-join"
-            onClick={(e) => this.handleJoin(e)}
+            onClick={e => this.handleJoin(e)}
           >
             Join
           </div>
@@ -54,9 +82,6 @@ class SearchResultPage extends React.Component {
             buttonElement={joinButton}
             title={c.courseName}
             subtitle={c.subtitle}
-            imgUrl={
-              "https://image.freepik.com/free-photo/modern-glass-desk-interior-with-computer-devices-3d-rendering_117023-333.jpg"
-            }
             expandedElement={
               <div>
                 <div>XXX</div>
@@ -89,7 +114,7 @@ class SearchResultPage extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    searchKeyword: state.searchKeyword,
+    searchKeyword: state.searchKeyword
   };
 };
 
