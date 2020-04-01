@@ -180,7 +180,7 @@ STATIC_URL = '/static/'
 #CORS
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:3000",
-#     "https://femtogudaki-frontend-op3ovi357a-an.a.run.app"
+    "https://femtogudaki-frontend-op3ovi357a-an.a.run.app"
 ]
 
 # from corsheaders.defaults import default_methods
