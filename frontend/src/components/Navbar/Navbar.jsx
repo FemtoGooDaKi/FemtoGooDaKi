@@ -4,16 +4,18 @@ import { Input, Popover } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGraduationCap, faDesktop } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
-import { SearchOutlined, FileAddFilled } from "@ant-design/icons";
+import {
+  SearchOutlined,
+  FileAddFilled,
+  ExportOutlined
+} from "@ant-design/icons";
 import { setSearchKeyword, setLoginFlag } from "../../actions";
 import "./Navbar.scss";
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
-    // Check if user has Auth token
-    if(localStorage.getItem('auth') !== null) {
-      // Set loginFlag to True in redux store
+    if (localStorage.getItem("auth") !== null) {
       props.setLoginFlag(true);
     }
   }
@@ -43,7 +45,6 @@ class Navbar extends Component {
   };
 
   handleSignUpButton = () => {
-    // register page stub
     this.props.history.push("/register");
   };
 
@@ -51,12 +52,21 @@ class Navbar extends Component {
     this.props.history.push("/");
   };
 
+  handleLogout = () => {
+    localStorage.removeItem('auth');
+    this.props.setLoginFlag(false);
+    this.props.history.push("/");
+  }
+
   render() {
     const { login } = this.props;
     return (
       <div className={"navbar-container" + (login ? " signed-in" : "")}>
         <div>
-          <span className={"navbar-title" + (login ? " signed-in" : "")} onClick={this.handleLogo}>
+          <span
+            className={"navbar-title" + (login ? " signed-in" : "")}
+            onClick={this.handleLogo}
+          >
             F
           </span>
           <Input
@@ -82,6 +92,11 @@ class Navbar extends Component {
             <Popover placement="bottom" content="My Course">
               <span onClick={this.handleMyCourseButton}>
                 <FontAwesomeIcon icon={faDesktop} />
+              </span>
+            </Popover>
+            <Popover placement="bottom" content="logout">
+              <span onClick={this.handleLogout}>
+                <ExportOutlined />
               </span>
             </Popover>
           </div>
