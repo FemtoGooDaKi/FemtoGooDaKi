@@ -183,9 +183,9 @@ CORS_ORIGIN_WHITELIST = [
     "https://femtogudaki-frontend-op3ovi357a-an.a.run.app/",
 ]
 
-from corsheaders.defaults import default_methods
+# from corsheaders.defaults import default_methods
 
-CORS_ALLOW_METHODS = list(default_methods)
+# CORS_ALLOW_METHODS = list(default_methods)
 
 from corsheaders.defaults import default_headers
 
