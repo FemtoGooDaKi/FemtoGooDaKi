@@ -44,24 +44,7 @@ class LoginPage extends React.Component {
       username: username,
       password: password
     };
-    // axios
-    //   .post(
-    //     "https://femtogudaki-backend-user-op3ovi357a-an.a.run.app/login",
-    //     {
-    //       headers: { 'Content-Type': 'text/plain' }, data: data,
-    //     }
-    //   )
-    //   .then(response => {
-    //     console.log(response);
-    //     // this.props.setUsername(username);
-    //     // this.props.setLoginFlag(true);
-    //     // this.setState({ redirect: "/mycourse" });
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //     this.setState({ showError: true });
-    //     this.openLoginError();
-    //   });
+
     const options = {
       method: "POST",
       headers: { "content-type": "text/plain" },
@@ -70,11 +53,10 @@ class LoginPage extends React.Component {
     };
     axios(options)
       .then(response => {
-        console.log('response',response);
-        console.log(response.headers['authorization'])
-        // this.props.setUsername(username);
-        // this.props.setLoginFlag(true);
-        // this.setState({ redirect: "/mycourse" });
+        this.props.setUsername(username);
+        this.props.setLoginFlag(true);
+        localStorage.setItem('auth', response.headers['authorization'])
+        this.setState({ redirect: "/mycourse" });
       })
       .catch(error => {
         console.log(error);

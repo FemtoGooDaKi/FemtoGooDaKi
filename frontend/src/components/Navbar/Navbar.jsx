@@ -5,10 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGraduationCap, faDesktop } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import { SearchOutlined, FileAddFilled } from "@ant-design/icons";
-import { setSearchKeyword } from "../../actions";
+import { setSearchKeyword, setLoginFlag } from "../../actions";
 import "./Navbar.scss";
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    // Check if user has Auth token
+    if(localStorage.getItem('auth') !== undefined) {
+      // Set loginFlag to True in redux store
+      props.setLoginFlag(true);
+    }
+  }
+
   handleInputKeyDown = e => {
     if (e.keyCode !== 13) return;
     console.log("enter");
@@ -96,6 +105,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  setLoginFlag: flag => dispatch(setLoginFlag(flag)),
   setSearchKeyword: keyword => dispatch(setSearchKeyword(keyword))
 });
 

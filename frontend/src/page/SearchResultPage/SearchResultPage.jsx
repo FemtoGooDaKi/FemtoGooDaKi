@@ -22,6 +22,23 @@ class SearchResultPage extends React.Component {
   }
 
   fetchData(keyword) {
+    //Example of Sending header
+    // const data = {
+    //   username: 'kevin'
+    // }
+    // const options = {
+    //   method: "GET",
+    //   headers: { "content-type": "application/json", "Authorization": localStorage.getItem('auth') },
+    //   data: JSON.stringify(data),
+    //   url: "https://femtogudaki-backend-user-op3ovi357a-an.a.run.app/user/kevin/"
+    // };
+    // axios(options)
+    //   .then(response => {
+    //     console.log(response)
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
     axios
       .get("http://localhost:5001/search", {
         params: {
