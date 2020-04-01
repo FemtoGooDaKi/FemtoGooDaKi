@@ -5,8 +5,7 @@ import { connect } from "react-redux";
 import { setLoginFlag, setUsername } from "../../actions";
 import { Redirect } from "react-router-dom";
 import { Input, Card } from "antd";
-import axios from "axios";
-import qs from "qs";
+import { userService } from "../../services/ServiceManager";
 import bg1 from "./bg2.jpg";
 import { notification } from "antd";
 
@@ -44,25 +43,18 @@ class LoginPage extends React.Component {
       username: username,
       password: password
     };
-
-    const options = {
-      method: "POST",
-      headers: { "content-type": "text/plain" },
-      data: JSON.stringify(data),
-      url: "https://femtogudaki-backend-user-op3ovi357a-an.a.run.app/login/"
-    };
-    axios(options)
-      .then(response => {
-        this.props.setUsername(username);
-        this.props.setLoginFlag(true);
-        localStorage.setItem('auth', response.headers['authorization'])
-        this.setState({ redirect: "/mycourse" });
-      })
-      .catch(error => {
+    userService.login(data, (authToken, error) => {
+      if (error) {
         console.log(error);
         this.setState({ showError: true });
         this.openLoginError();
-      });
+        return;
+      }
+      this.props.setUsername(username);
+      this.props.setLoginFlag(true);
+      localStorage.setItem("auth", authToken);
+      this.setState({ redirect: "/mycourse" });
+    });
   };
 
   render() {

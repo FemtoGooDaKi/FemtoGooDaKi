@@ -12,7 +12,7 @@ class Navbar extends Component {
   constructor(props) {
     super(props);
     // Check if user has Auth token
-    if(localStorage.getItem('auth') !== undefined) {
+    if(localStorage.getItem('auth') !== null) {
       // Set loginFlag to True in redux store
       props.setLoginFlag(true);
     }
