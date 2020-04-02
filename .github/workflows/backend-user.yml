@@ -29,6 +29,11 @@ jobs:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
+    - name: Test
+      run: |
+        pip3 install -r backend/user/requirements.txt
+        python3 backend/user/user/manage.py test
+      
     - name: Build
       run: |
         cd backend/user        
