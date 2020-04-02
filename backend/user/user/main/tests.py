@@ -135,7 +135,3 @@ class testCase(TestCase):
         contents = json.dumps({"username":"username002","password":"password"})
         response = login(testCase.mock_request(self,"POST",content=contents))
         self.assertEquals(response.status_code, 401)
-
-
-
-        #cloud_sql_proxy -instances=femtogudaki:asia-northeast1:user-db=tcp:3306 -credential_file=femtogudakiKey.json &
