@@ -120,7 +120,7 @@ if os.getenv('PRODUCTION', None):
             'NAME': 'CORE',
         }
     }
-elif not os.getenv('TESTING',None):
+elif os.getenv('TESTING') == None:
     # Running locally so connect to either a local MySQL instance or connect to
     # Cloud SQL via the proxy. To start the proxy via command line:
     #
@@ -136,6 +136,9 @@ elif not os.getenv('TESTING',None):
             'USER': 'root',
         }
     }
+ else{
+    DATABASES = {}
+ }
 # [END db_setup]
 
 
