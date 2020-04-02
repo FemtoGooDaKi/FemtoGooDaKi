@@ -13,9 +13,8 @@ export const courseService = {
     callback: (data, error) => {}
     */
     getCourseDetail: (courseId, callback) => {
-        // Why POST orz
-        const endpoint = '/detail/';
-        axios.post(courseBaseUrl + endpoint, courseId)
+        const endpoint = '/course/';
+        axios.get(courseBaseUrl + endpoint + courseId)
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
     },
