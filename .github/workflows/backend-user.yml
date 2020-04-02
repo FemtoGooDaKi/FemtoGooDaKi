@@ -3,7 +3,7 @@ name: Build backend (user service) docker images and push to registry
 on:
   push:
     branches:
-    - changeCI
+    - master
 env:
   GKE_PROJECT: ${{ secrets.GKE_PROJECT }}
   GKE_EMAIL: ${{ secrets.GKE_EMAIL }}
