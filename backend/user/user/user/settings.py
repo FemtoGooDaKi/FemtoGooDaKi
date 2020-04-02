@@ -136,9 +136,8 @@ elif os.getenv('TESTING') == None:
             'USER': 'root',
         }
     }
- else{
+else:
     DATABASES = {}
- }
 # [END db_setup]
 
 
