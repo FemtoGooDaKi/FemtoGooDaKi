@@ -31,7 +31,7 @@ jobs:
         gcloud auth configure-docker
     - name: Test
       run: |
-        docker run --name mysql -e MYSQL_ROOT_PASSWORD="" -e MYSQL_DATABASE=CORE -p 3306:3306
+        docker run --name mysql -e MYSQL_ROOT_PASSWORD="" -e MYSQL_DATABASE=CORE -p 3306:3306 -d mysql:latest
         pip3 install -r backend/user/requirements.txt
         python3 backend/user/user/manage.py test
       
