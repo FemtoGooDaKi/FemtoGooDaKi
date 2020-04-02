@@ -38,8 +38,7 @@ jobs:
           --build-arg GITHUB_REF="$GITHUB_REF" .
     - name: Test
       run: |
-        docker run -e TESTING=1 $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA
-        docker exec -it -e TESTING=1 $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA /bin/sh -c "python3 user/manage.py test"
+        docker run -e TESTING=1 $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA /bin/sh -c "python3 user/manage.py test"
 
     # Push the Docker image to Google Container Registry
     - name: Publish
