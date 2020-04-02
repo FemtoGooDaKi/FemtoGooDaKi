@@ -1,10 +1,9 @@
 from django.test import TestCase
 from main.models import User
 from django.http import HttpRequest
-from main.views import get_user_detail, update_user_detail, delete_user, user_endpoint, login, register
+from main.views import update_user_detail, delete_user, user_endpoint, login, register
 from datetime import datetime
-import requests, json
-from rest_framework.parsers import JSONParser
+import json
 from io import BytesIO
 
 class testCase(TestCase):
