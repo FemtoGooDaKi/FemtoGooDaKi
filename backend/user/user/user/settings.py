@@ -120,7 +120,7 @@ if os.getenv('PRODUCTION', None):
             'NAME': 'CORE',
         }
     }
-else:
+elif not os.getenv('TESTING',True):
     # Running locally so connect to either a local MySQL instance or connect to
     # Cloud SQL via the proxy. To start the proxy via command line:
     #
@@ -134,6 +134,13 @@ else:
             'PORT': '3306',
             'NAME': 'CORE',
             'USER': 'root',
+        }
+    }
+else:
+    DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         }
     }
 # [END db_setup]

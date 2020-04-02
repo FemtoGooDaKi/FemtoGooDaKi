@@ -29,11 +29,6 @@ jobs:
         # Set up docker to authenticate
         # via gcloud command-line tool.
         gcloud auth configure-docker
-    - name: Test
-      run: |
-        docker run --name mysql -e MYSQL_ROOT_PASSWORD="" -e MYSQL_DATABASE=CORE -p 3306:3306 -d mysql:latest
-        pip3 install -r backend/user/requirements.txt
-        python3 backend/user/user/manage.py test
       
     - name: Build
       run: |
@@ -41,6 +36,10 @@ jobs:
         docker build -t "$REGISTRY_HOSTNAME"/"$GKE_PROJECT"/"$IMAGE":"$GITHUB_SHA" \
           --build-arg GITHUB_SHA="$GITHUB_SHA" \
           --build-arg GITHUB_REF="$GITHUB_REF" .
+          
+    - name: Test
+      run: |
+        docker run -e TESTING=1 $REGISTRY_HOSTNAME/$GKE_PROJECT/$IMAGE:$GITHUB_SHA /bin/sh -c "python3 manage.py test"
 
     # Push the Docker image to Google Container Registry
     - name: Publish
