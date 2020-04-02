@@ -42,16 +42,6 @@ class testCase(TestCase):
         response = update_user_detail("username002", data)
         self.assertEquals(response.status_code, 404)
 
-    def test_update_user_detail_data_invalid(self):
-        # test 401
-        data = json.dumps({
-                            "firstName":"name001-2",
-                            "lastName":"lastname",
-                            "dont_have_this_in_content":"12345",
-                            "job":"Author"})
-        response = update_user_detail("name001", data)
-        self.assertEquals(response.status_code, 400)
-
     def test_delete_user_not_exist(self):
         response = delete_user("username002")
         self.assertEquals(response.status_code, 404)
@@ -92,6 +82,15 @@ class testCase(TestCase):
         endpoint_response = user_endpoint(testCase.mock_request(self,"PUT",content=data,header=headers),"username002")
         self.assertEquals(endpoint_response.status_code, 401)
 
+    def test_user_endpoint_PUT_pass(self):
+        # test 200
+        data = json.dumps({"username":"name001","password":"password"})
+        response = login(testCase.mock_request(self,"POST",content=data))
+        authen = response['Authorization']
+        data = json.dumps({"firstName":"name001-2","lastName":"lastname","birthDate":"2020-02-20","job":"Author"})
+        headers = {"Content-Type":"application/json","Authorization":str(authen)}
+        endpoint_response = user_endpoint(testCase.mock_request(self,"PUT",content=data,header=headers),"name001")
+        self.assertEquals(endpoint_response.status_code, 200)
 
     def test_user_endpoint_DELETE_username_fail(self):
         data = json.dumps({"username":"name001","password":"password"})
@@ -108,7 +107,6 @@ class testCase(TestCase):
         headers = {"Content-Type":"application/json","Authorization":str(authen)}
         endpoint_response = user_endpoint(testCase.mock_request(self,"DELETE",header=headers),"name001")
         self.assertEquals(endpoint_response.status_code, 204)
-        print(endpoint_response.content)
 
     def test_user_endpoint_method_wrong(self):
         data = json.dumps({"username":"name001","password":"password"})
@@ -120,18 +118,53 @@ class testCase(TestCase):
 
     def test_login_method_not_POST(self):
         # test method not POST
-        contents = json.dumps({"username":"name001","password":"password"})
-        response = login(testCase.mock_request(self,"GET",content=contents))
+        data = json.dumps({"username":"name001","password":"password"})
+        response = login(testCase.mock_request(self,"GET",content=data))
         self.assertEquals(response.status_code, 405)
 
     def test_login_pass(self):    
         # test 200 OK
-        contents = json.dumps({"username":"name001","password":"password"})
-        response = login(testCase.mock_request(self,"POST",content=contents))
+        data = json.dumps({"username":"name001","password":"password"})
+        response = login(testCase.mock_request(self,"POST",content=data))
         self.assertEquals(response.status_code, 200)
 
     def test_login_user_not_exist(self):    
         # test 401
-        contents = json.dumps({"username":"username002","password":"password"})
-        response = login(testCase.mock_request(self,"POST",content=contents))
+        data = json.dumps({"username":"username002","password":"password"})
+        response = login(testCase.mock_request(self,"POST",content=data))
         self.assertEquals(response.status_code, 401)
+
+    def test_register_method_not_POST(self):
+        data = json.dumps({
+            "username":"babe",
+            "password":"password",
+            "firstName":"Natthapong",
+            "lastName":"Jiemjintanarom",
+            "birthDate":"1998-04-02",
+            "job":"student"
+        })
+        response = register(testCase.mock_request(self,"GET",content=data))
+        self.assertEquals(response.status_code, 405)
+    
+    def test_register_data_invalid(self):
+        data = json.dumps({
+            "username":"babe",
+            "password":"password",
+            "firstName":"Natthapong",
+            "lastName":"Jiemjintanarom",
+            "job":"student"
+        })
+        response = register(testCase.mock_request(self,"POST",content=data))
+        self.assertEquals(response.status_code, 400)
+
+    def test_register_data_valid(self):
+        data = json.dumps({
+            "username":"babe",
+            "password":"password",
+            "firstName":"Natthapong",
+            "lastName":"Jiemjintanarom",
+            "birthDate":"1998-04-02",
+            "job":"student"
+        })
+        response = register(testCase.mock_request(self,"POST",content=data))
+        self.assertEquals(response.status_code, 201)
