@@ -29,18 +29,25 @@ def update_user_detail(username, data):
     except User.DoesNotExist:
         return HttpResponse(status=404)
 
-    if 'password_hash' in data:
-        del data['password_hash']
-    if 'username' in data:
-        del data['username']
-    serializer = UserSerializer(obj, data=data)
-    if serializer.is_valid():
-        serializer.save()
+    # if 'password_hash' in data:
+    #     del data['password_hash']
+    # if 'username' in data:
+    #     del data['username']
+    # serializer = UserSerializer(obj, data=data)
+    # if serializer.is_valid():
+    #     serializer.save()
+    #
+    #     data = serializer.data
+    #     del data['password_hash']
+    #     return HttpResponse(status=200)
+    # return JsonResponse(serializer.errors, status=400)
 
-        data = serializer.data
-        del data['password_hash']
-        return HttpResponse(status=200)
-    return JsonResponse(serializer.errors, status=400)
+    for f in (f.name for f in User._meta.fields):
+        if f in ('password_hash', 'username'):
+            continue
+        setattr(obj, f, data.get(f, getattr(obj, f)))
+
+    return HttpResponse(status=200)
 
 
 def delete_user(username):
