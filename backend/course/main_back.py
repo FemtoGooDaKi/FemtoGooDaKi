@@ -5,14 +5,14 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 
-from course.util import validate_token
+from course_back.util import validate_token
 
 app = Flask(__name__)
 
 
 @app.route('/detail', methods=['POST'])
 def course_detail():
-    from course.detail import get_course_detail
+    from course_back.detail import get_course_detail
 
     course_id = request.form.get('courseId', None)
     if course_id is None:
@@ -26,7 +26,7 @@ def course_detail():
 
 @app.route('/search', methods=['GET'])
 def search():
-    from course.search import search_courses
+    from course_back.search import search_courses
 
     keyword = request.args.get('keyword', None)
     last_id = request.args.get('lastId', None)
@@ -40,7 +40,7 @@ def search():
 
 @app.route('/addCourse', methods=['POST'])
 def add_course():
-    from course.add_course import get_course_creation_data, add_course
+    from course_back.add_course import get_course_creation_data, add_course
 
     author = request.form.get('author', None)
     token = request.form.get('token', None)
