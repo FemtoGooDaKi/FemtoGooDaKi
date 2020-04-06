@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import base64
+import hashlib
+from jose import jwt
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,26 +25,57 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'pe)s1_l*d=o51tzzq_vfqf5%op*+fk)&26h8^4nvg*65xhg36b'
 
+
+def encode_password(password):
+    result = hashlib.sha512(base64.b64encode((password + SECRET_KEY).encode('utf-8'))).hexdigest()
+    return result
+
+
+def encode_jwt(data):
+    return jwt.encode(data, SECRET_KEY, 'HS256')
+
+
+def decode_jwt_data(token):
+    return jwt.get_unverified_claims(token.split(' ')[1])
+
+
+def verify_jwt(token):
+    try:
+        claims = jwt.get_unverified_claims(token)
+        data = jwt.decode(token, SECRET_KEY)
+    except Exception as e:
+        print(e)
+        return False
+    return claims == data
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
+
+    'corsheaders',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -73,12 +107,43 @@ WSGI_APPLICATION = 'course.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# [START db_setup]
+if os.getenv('PRODUCTION', None):
+    # Running on production App Engine, so connect to Google Cloud SQL using
+    # the unix socket at /cloudsql/<your-cloudsql-connection string>
+    connection_name = 'femtogudaki:asia-northeast1:course-db'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '/cloudsql/' + connection_name,
+            'USER': 'root',
+            'NAME': 'CORE',
+        }
     }
-}
+elif not os.getenv('TESTING',True):
+    # Running locally so connect to either a local MySQL instance or connect to
+    # Cloud SQL via the proxy. To start the proxy via command line:
+    #
+    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    #
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'NAME': 'CORE',
+            'USER': 'root',
+        }
+    }
+else:
+    DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+# [END db_setup]
 
 
 # Password validation
@@ -118,3 +183,24 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#CORS
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "https://femtogudaki-frontend-op3ovi357a-an.a.run.app"  # TODO: fix this url once deployed
+]
+
+# from corsheaders.defaults import default_methods
+
+# CORS_ALLOW_METHODS = list(default_methods)
+
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Authorization',
+]
+
+CORS_EXPOSE_HEADERS = [
+    'authorization',
+    'Authorization'
+]
