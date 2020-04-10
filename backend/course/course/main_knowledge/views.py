@@ -1,3 +1,7 @@
-from django.shortcuts import render
 
-# Create your views here.
+def knowledge_id_endpoint(pk):
+    pass
+
+
+def knowledge_endpoint():
+    pass

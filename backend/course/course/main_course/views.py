@@ -1,3 +1,7 @@
-from django.shortcuts import render
 
-# Create your views here.
+def course_id_endpoint(pk):
+    pass
+
+
+def course_endpoint():
+    pass
