@@ -59,6 +59,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'main.apps.MainConfig',
+    'main_knowledge.apps.MainKnowledgeConfig',
 
     'corsheaders',
 
