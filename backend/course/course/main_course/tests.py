@@ -10,19 +10,6 @@ from main_knowledge.models import Knowledge
 class courseTestCase(TestCase):
 
     def setUp(self):
-        self.knowledge = Knowledge.objects.create(
-            author="author001",
-            subject="subject001",
-            content="hihihihihihihihihihhihi",
-            createDate=datetime(2020,3,1)
-        )
-        # course = Course.objects.create(
-        #     author="author001",
-        #     courseName="course001",
-        #     description="description",
-        #     createDate=datetime(2020,3,4),
-        #     job="Author"
-        # )
         self.course2 = Course(
             id="2",
             author="author002",
@@ -33,6 +20,7 @@ class courseTestCase(TestCase):
         ).save()
         course2_ = Course.objects.get(id="2")
         self.knowledge_set2 = course2_.knowledge_set.create(
+            id="2",
             author="author002",
             subject="subject002",
             content="hihihihihihihihihihhihi",
@@ -48,7 +36,9 @@ class courseTestCase(TestCase):
         request1.headers = header
 
         return request1
-    
+
+    def get_token(self):
+        return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoYWluIn0.Zrm7f9vw9qLA8dWxK9TRDZxO7U1XZQqSsgxFitf8Leg"
     # ------------------------------------
 
     def test_model(self):
@@ -58,7 +48,7 @@ class courseTestCase(TestCase):
     # ------------------------------------
 
     def test_course_endpoint_wrong_method(self):
-        authen = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoYWluIn0.Zrm7f9vw9qLA8dWxK9TRDZxO7U1XZQqSsgxFitf8Leg'
+        authen = self.get_token()
         headers = {"Content-Type":"application/json","Authorization":str(authen)}
         endpoint_response = course_endpoint(courseTestCase.mock_request(self,"VIEW",header=headers))
         self.assertEquals(endpoint_response.status_code, 405)
@@ -72,4 +62,35 @@ class courseTestCase(TestCase):
         # no authen
         endpoint_res = course_endpoint(courseTestCase.mock_request(self,"GET"))
         self.assertEquals(endpoint_res.status_code, 401)
-        
+    
+    def test_course_endpoint_method_POST_pass(self):
+        authen = self.get_token()
+        headers = {"Content-Type":"application/json","Authorization":str(authen)}
+        data = json.dumps({"courseName":"testcourse001","description":"description","knowledge_set":[2],"job":"student"})
+        endpoint_response = course_endpoint(courseTestCase.mock_request(self,"POST",header=headers,content=data))
+        self.assertEquals(endpoint_response.status_code, 201)
+    
+    def test_course_endpoint_method_POST_fail(self):
+        authen = self.get_token()
+        headers = {"Content-Type":"application/json","Authorization":str(authen)}
+        data = json.dumps({"courseName":"testcourse001","description":"description","knowledge_set":[99],"job":"student"})
+        endpoint_response = course_endpoint(courseTestCase.mock_request(self,"POST",header=headers,content=data))
+        self.assertEquals(endpoint_response.status_code, 400)
+
+    def test_course_endpoint_POST_no_username(self):
+        authen = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyYWRuYW1lIjoiZGVsMSJ9.STuyNkPLdj0uFV7SUtr_L9ggLJ0wcs39KKHu5LtB-Ro"
+        headers = {"Content-Type":"application/json","Authorization":str(authen)}
+        data = json.dumps({"courseName":"testcourse001","description":"description","knowledge_set":[2],"job":"student"})
+        endpoint_response = course_endpoint(courseTestCase.mock_request(self,"POST",header=headers,content=data))
+        self.assertEquals(endpoint_response.status_code, 401)
+
+
+    # test query still fail cuz every query return mock example
+
+    # def test_course_endpoint_GET_exist(self):
+    #     authen = self.get_token()
+    #     headers = {"Content-Type":"application/json","Authorization":str(authen)}
+    #     contents = json.dumps({"query":"test"})
+    #     request = courseTestCase.mock_request(self,"GET",header=headers,content=contents)
+    #     endpoint_response = course_endpoint(request)
+    #     self.assertEquals(endpoint_response.status_code, 200)
