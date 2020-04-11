@@ -89,9 +89,3 @@ class knowledgeTestCase(TestCase):
         request.query = "ppp"
         endpoint_response = knowledge_endpoint(request)
         self.assertEquals(endpoint_response.status_code, 200)
-        query = request.GET.get('query', '')
-        print("query = ",query)
-        obj = Knowledge.objects.filter(subject__contains=query) 
-        print("obj = ",obj)
-        data = {'results': KnowledgeSerializer(obj, many=True).data} 
-        print("Data= ",data)
