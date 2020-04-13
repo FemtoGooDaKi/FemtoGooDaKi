@@ -58,6 +58,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'main.apps.MainConfig',
+
     'corsheaders',
 
     'django.contrib.admin',
