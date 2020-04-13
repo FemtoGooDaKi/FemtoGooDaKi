@@ -2,13 +2,14 @@ import React from "react";
 import { Card } from "../../components/Card";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import axios from "axios";
+import { courseService } from "../../services/ServiceManager";
+import RandomPicture from "../../components/RandomPicture/RandomPicture";
 import "./SearchResultPage.scss";
 
 class SearchResultPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { searchResult: {} };
+    this.state = { searchResult: [] };
   }
 
   componentDidMount() {
@@ -22,59 +23,48 @@ class SearchResultPage extends React.Component {
   }
 
   fetchData(keyword) {
-    //Example of Sending header
-    // const data = {
-    //   username: 'kevin'
-    // }
-    // const options = {
-    //   method: "GET",
-    //   headers: { "content-type": "application/json", "Authorization": localStorage.getItem('auth') },
-    //   data: JSON.stringify(data),
-    //   url: "https://femtogudaki-backend-user-op3ovi357a-an.a.run.app/user/kevin/"
-    // };
-    // axios(options)
-    //   .then(response => {
-    //     console.log(response)
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
-    axios
-      .get("http://localhost:5001/search", {
-        params: {
-          keyword: keyword
-        }
-      })
-      .then(response => {
-        console.log(response.data);
-        this.setState({ searchResult: response.data });
-      })
-      .catch(function(error) {
+    courseService.searchCourse(keyword, (result, error) => {
+      if (error) {
         console.log(error);
-      });
+        return;
+      }
+      this.setState({ searchResult: result.results });
+    });
   }
 
-  handleJoin = e => {
+  handleJoin = (e) => {
     e.preventDefault();
     this.props.history.push(`/course/${e.target.id}`);
   };
 
   render() {
     const { searchResult } = this.state;
-    const course = searchResult.data;
-
-    let courseList;
-    if (course) {
-      courseList = course.map(c => {
+    let courseList = <div className="search-not-found"> No course found </div>;
+    if (searchResult.length > 0) {
+      courseList = searchResult.map((c) => {
         const joinButton = (
           <div
             id={c.id}
             className="search-result-join"
-            onClick={e => this.handleJoin(e)}
+            onClick={(e) => this.handleJoin(e)}
           >
             Join
           </div>
         );
+        console.log(c.knowledge_set);
+        const knowledgeList = c.knowledge_set
+          .sort((a, b) => (a.subject > b.subject ? 1 : -1))
+          .map((k, id) => {
+            console.log("k", k);
+            return (
+              <div className="knowledge-card" key={"k" + k.id}>
+                <div className="knowledge-picture">
+                  <RandomPicture />
+                </div>
+                <span>{k.subject}</span>
+              </div>
+            );
+          });
         return (
           <Card
             key={c.id}
@@ -82,22 +72,7 @@ class SearchResultPage extends React.Component {
             buttonElement={joinButton}
             title={c.courseName}
             subtitle={c.subtitle}
-            expandedElement={
-              <div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-                <div>XXX</div>
-              </div>
-            }
+            expandedElement={knowledgeList}
           />
         );
       });
@@ -112,9 +87,9 @@ class SearchResultPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    searchKeyword: state.searchKeyword
+    searchKeyword: state.searchKeyword,
   };
 };
 

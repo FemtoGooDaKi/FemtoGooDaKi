@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const courseBaseUrl = '';
+const courseBaseUrl = 'https://femtogudaki-backend-course-op3ovi357a-an.a.run.app';
 const enrollmentBaseUrl = '';
 const userBaseUrl = 'https://femtogudaki-backend-user-op3ovi357a-an.a.run.app';
 const authToken = localStorage.getItem('auth');
@@ -38,12 +38,29 @@ export const courseService = {
     },
 
     /*
+    params: {
+            subject: String,
+            content: String,
+    }
+    callback: (data: { id, status }, error) => {}
+    */
+    addKnowledge: (params, callback) => {
+        const endpoint = '/knowledge/';
+        const headers = { Authorization: authToken }
+        axios.post(courseBaseUrl + endpoint, params, {headers: headers})
+            .then(response => callback(response.data))
+            .catch(error => callback(null, error));
+    },
+
+    /*
     params: { keyword: String[, lastId: Integer] }
     callback: (data: { data, lastId }, error) => {}
     */
-    searchCourse: (params, callback) => {
-        const endpoint = '/search/';
-        axios.get(courseBaseUrl + endpoint, { params: params })
+    searchCourse: (query, callback) => {
+        const headers = { Authorization: authToken }
+        const endpoint = '/course?query=' + query;
+        console.log(endpoint)
+        axios.get(courseBaseUrl + endpoint, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
     }

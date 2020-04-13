@@ -36,3 +36,24 @@
     filter: brightness(125%);
   }
 }
+
+.knowledge-card {
+  display: flex;
+  align-items: center;
+  margin: 24px 0px;
+  font-size: 2em;
+}
+
+.knowledge-picture {
+  width: 125px;
+  height: 125px;
+  margin-right: 16px;
+  > img {
+    border-radius: 4px;
+  }
+}
+
+.search-not-found {
+  font-size: 3.5em;
+  text-align: center;
+}

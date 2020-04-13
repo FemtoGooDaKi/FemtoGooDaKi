@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Merriweather&display=swap");
+
+.add-course-page {
+  font-family: 'Merriweather', serif;
+  padding: 40px 80px;
+}
+
+.add-course-form {
+  padding: 40px 17.5%;
+}
+
+.add-course-tail {
+  > div > div > div {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
