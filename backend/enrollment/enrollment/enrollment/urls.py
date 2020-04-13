@@ -1,4 +1,4 @@
-"""course URL Configuration
+"""enrollment URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -18,7 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('knowledge/', include('main_knowledge.urls')),
-    path('course/', include('main_course.urls')),
-    path('enroll/', include('main_enrollment.urls')),
+    path('/', include('main.urls')),
 ]

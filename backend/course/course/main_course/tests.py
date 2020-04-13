@@ -52,17 +52,7 @@ class courseTestCase(TestCase):
         headers = {"Content-Type":"application/json","Authorization":str(authen)}
         endpoint_response = course_endpoint(courseTestCase.mock_request(self,"VIEW",header=headers))
         self.assertEquals(endpoint_response.status_code, 405)
-    
-    def test_course_endpoint_wrong_and_no_authorization(self):
-        authen = 'Bearer eyJhbGcwrongoneIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoYWluIn0.Zrm7f9vw9qLA8dWxK9TRDZxO7U1XZQqSsgxFitf8Leg'
-        headers = {"Content-Type":"application/json","Authorization":str(authen)}
-        # wrong authen
-        endpoint_response = course_endpoint(courseTestCase.mock_request(self,"GET",header=headers))
-        self.assertEquals(endpoint_response.status_code, 401)
-        # no authen
-        endpoint_res = course_endpoint(courseTestCase.mock_request(self,"GET"))
-        self.assertEquals(endpoint_res.status_code, 401)
-    
+
     def test_course_endpoint_method_POST_pass(self):
         authen = self.get_token()
         headers = {"Content-Type":"application/json","Authorization":str(authen)}
@@ -84,13 +74,10 @@ class courseTestCase(TestCase):
         endpoint_response = course_endpoint(courseTestCase.mock_request(self,"POST",header=headers,content=data))
         self.assertEquals(endpoint_response.status_code, 401)
 
+    def test_search_course_exist(self):
+        data = search_course("course").content.decode()
+        self.assertTrue(data != '{"results": []}')
 
-    # test query still fail cuz every query return mock example
-
-    # def test_course_endpoint_GET_exist(self):
-    #     authen = self.get_token()
-    #     headers = {"Content-Type":"application/json","Authorization":str(authen)}
-    #     contents = json.dumps({"query":"test"})
-    #     request = courseTestCase.mock_request(self,"GET",header=headers,content=contents)
-    #     endpoint_response = course_endpoint(request)
-    #     self.assertEquals(endpoint_response.status_code, 200)
+    def test_search_course_not_exist(self):
+        data = search_course("xxxx").content.decode()
+        self.assertTrue(data == '{"results": []}')
