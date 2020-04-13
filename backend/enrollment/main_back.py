@@ -4,7 +4,7 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 
-from enrollment.util import validate_token
+from enrollment_back.util import validate_token
 
 
 app = Flask(__name__)
@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route('/enroll', methods=['POST'])
 def enroll():
-    from enrollment.enroll import enroll
+    from enrollment_back.enroll import enroll
 
     course_id = request.form.get('courseId', None)
     username = request.form.get('username', None)
