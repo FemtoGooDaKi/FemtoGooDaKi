@@ -15,3 +15,9 @@ class CourseReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
         fields = '__all__'
+
+
+class CoursePreviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = ('courseName', 'author', 'description', 'createDate', 'job')
