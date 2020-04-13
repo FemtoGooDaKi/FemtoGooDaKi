@@ -53,13 +53,6 @@ class courseTestCase(TestCase):
         endpoint_response = course_endpoint(courseTestCase.mock_request(self,"VIEW",header=headers))
         self.assertEquals(endpoint_response.status_code, 405)
 
-    def test_course_endpoint_wrong_authorization(self):
-        authen = 'Bearer eyJhbGcwrongoneIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNoYWluIn0.Zrm7f9vw9qLA8dWxK9TRDZxO7U1XZQqSsgxFitf8Leg'
-        headers = {"Content-Type":"application/json","Authorization":str(authen)}
-        # wrong authen
-        endpoint_response = course_endpoint(courseTestCase.mock_request(self,"GET",header=headers))
-        self.assertEquals(endpoint_response.status_code, 401)
-
     def test_course_endpoint_method_POST_pass(self):
         authen = self.get_token()
         headers = {"Content-Type":"application/json","Authorization":str(authen)}
