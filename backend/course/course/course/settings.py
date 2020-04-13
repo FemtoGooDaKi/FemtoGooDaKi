@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'main_knowledge.apps.MainKnowledgeConfig',
     'main_course.apps.MainCourseConfig',
+    'main_enrollment.apps.MainEnrollmentConfig',
 
     'corsheaders',
 
