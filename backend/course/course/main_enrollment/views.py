@@ -21,11 +21,12 @@ def enroll(username, course_id):
     obj = get_or_create_enrollment(username)
     obj.courses.add(course_id)
 
-    serializer = EnrollmentSerializer(obj)
-    if serializer.is_valid():
-        serializer.save()
-        return HttpResponse(status=201)
-    return JsonResponse(serializer.errors, status=400)
+    try:
+        obj.save()
+    except Exception as e:
+        print(e)
+        return HttpResponse(status=400)
+    return HttpResponse(status=201)
 
 
 @csrf_exempt
@@ -44,7 +45,7 @@ def enroll_endpoint(request):
     if not username or username != payload.get('username', ''):
         return HttpResponse(status=401)
 
-    course_id = data.get('course_id', '')
+    course_id = data.get('courseId', '')
     try:
         course_id = int(course_id)
     except ValueError:
@@ -57,4 +58,11 @@ def enroll_endpoint(request):
 def get_courses(request, username):
     if request.method != 'GET':
         return HttpResponse(status=405)
-    pass
+
+    try:
+        obj = Enrollment.objects.get(username=username)
+    except Enrollment.DoesNotExist:
+        return HttpResponse(status=404)
+
+    data = EnrollmentSerializer(obj).data
+    return JsonResponse(data)
