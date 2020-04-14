@@ -3,7 +3,7 @@
 import axios from 'axios';
 
 const courseBaseUrl = 'https://femtogudaki-backend-course-op3ovi357a-an.a.run.app';
-const enrollmentBaseUrl = '';
+const enrollmentBaseUrl = 'https://femtogudaki-backend-course-op3ovi357a-an.a.run.app';
 const userBaseUrl = 'https://femtogudaki-backend-user-op3ovi357a-an.a.run.app';
 const authToken = localStorage.getItem('auth');
 
@@ -57,10 +57,8 @@ export const courseService = {
     callback: (data: { data, lastId }, error) => {}
     */
     searchCourse: (query, callback) => {
-        const headers = { Authorization: authToken }
         const endpoint = '/course?query=' + query;
-        console.log(endpoint)
-        axios.get(courseBaseUrl + endpoint, { headers: headers })
+        axios.get(courseBaseUrl + endpoint)
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
     }
@@ -74,6 +72,13 @@ export const enrollmentService = {
     enrollCourse: (params, callback) => {
         const endpoint = '/enroll/';
         axios.post(enrollmentBaseUrl + endpoint, params)
+            .then(response => callback(response.data))
+            .catch(error => callback(null, error));
+    },
+
+    getEnrollCourse: (username, callback) => {
+        const endpoint = '/enroll/user/' + username;
+        axios.get(enrollmentBaseUrl + endpoint)
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
     }

@@ -45,7 +45,6 @@ class LoginPage extends React.Component {
     };
     userService.login(data, (authToken, error) => {
       if (error) {
-        console.log(error);
         this.setState({ showError: true });
         this.openLoginError();
         return;

@@ -2,14 +2,17 @@ import React from "react";
 import { Card } from "../../components/Card";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { courseService } from "../../services/ServiceManager";
+import {
+  courseService,
+  enrollmentService,
+} from "../../services/ServiceManager";
 import RandomPicture from "../../components/RandomPicture/RandomPicture";
 import "./SearchResultPage.scss";
 
 class SearchResultPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { searchResult: [] };
+    this.state = { searchResult: [], enrollCourse: [] };
   }
 
   componentDidMount() {
@@ -22,7 +25,8 @@ class SearchResultPage extends React.Component {
     }
   }
 
-  fetchData(keyword) {
+  fetchData = (keyword) => {
+    console.log("p", this.props);
     courseService.searchCourse(keyword, (result, error) => {
       if (error) {
         console.log(error);
@@ -30,11 +34,24 @@ class SearchResultPage extends React.Component {
       }
       this.setState({ searchResult: result.results });
     });
-  }
+    enrollmentService.getEnrollCourse(this.props.username, (result, error) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      console.log("r", result);
+      this.setState({ enrollCourse: result.results });
+    });
+  };
 
   handleJoin = (e) => {
     e.preventDefault();
     this.props.history.push(`/course/${e.target.id}`);
+  };
+
+  handleContinue = (e) => {
+    e.preventDefault();
+    this.props.history.push(`/course/${e.target.id}/learn`);
   };
 
   render() {
@@ -51,11 +68,19 @@ class SearchResultPage extends React.Component {
             Join
           </div>
         );
-        console.log(c.knowledge_set);
+        const continueButton = (
+          <div
+            id={c.id}
+            className="search-result-continue"
+            onClick={(e) => this.handleContinue(e)}
+          >
+            Continue
+          </div>
+        );
+        const isEnrolled = false;
         const knowledgeList = c.knowledge_set
           .sort((a, b) => (a.subject > b.subject ? 1 : -1))
-          .map((k, id) => {
-            console.log("k", k);
+          .map((k) => {
             return (
               <div className="knowledge-card" key={"k" + k.id}>
                 <div className="knowledge-picture">
@@ -69,7 +94,7 @@ class SearchResultPage extends React.Component {
           <Card
             key={c.id}
             className="search-result-course"
-            buttonElement={joinButton}
+            buttonElement={!isEnrolled ? joinButton : continueButton}
             title={c.courseName}
             subtitle={c.subtitle}
             expandedElement={knowledgeList}
@@ -90,6 +115,7 @@ class SearchResultPage extends React.Component {
 const mapStateToProps = (state) => {
   return {
     searchKeyword: state.searchKeyword,
+    username: state.username,
   };
 };
 

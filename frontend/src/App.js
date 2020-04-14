@@ -53,7 +53,7 @@ export default function App() {
             <div>Career</div>
           </Route>
 
-          <Route path="/course/:id">
+          <Route path="/course/:id" exact>
             <Navbar />
             <CoursePage
               imgUrl='https://i.imgur.com/mJM1gO1.jpg'

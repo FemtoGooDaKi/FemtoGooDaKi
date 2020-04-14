@@ -37,6 +37,25 @@
   }
 }
 
+.search-result-continue {
+  font-family: Roboto;
+  font-size: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #23a873;
+  border: 4px solid #23a873;
+  border-radius: 8px;
+  width: 250px;
+  height: 100px;
+  transition: 0.2s ease-out;
+
+  &:hover {
+    filter: brightness(125%);
+  }
+}
+
 .knowledge-card {
   display: flex;
   align-items: center;
