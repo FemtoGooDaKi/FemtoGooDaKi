@@ -1,7 +1,7 @@
 from django.test import TestCase
 from main_course.models import Course
 from django.http import HttpRequest
-from main_course.views import course_endpoint, course_id_endpoint, create_course, search_course
+from main_course.views import course_endpoint, course_id_endpoint, create_course, search_course, get_course_detail
 from datetime import datetime
 import json
 from io import BytesIO
@@ -47,6 +47,10 @@ class courseTestCase(TestCase):
     
     # ------------------------------------
 
+    def test_course_endpoint_token_not_verify(self):
+        endpoint_response = course_endpoint(courseTestCase.mock_request(self,"POST"))
+        self.assertEquals(endpoint_response.status_code, 401)
+
     def test_course_endpoint_wrong_method(self):
         authen = self.get_token()
         headers = {"Content-Type":"application/json","Authorization":str(authen)}
@@ -74,6 +78,10 @@ class courseTestCase(TestCase):
         endpoint_response = course_endpoint(courseTestCase.mock_request(self,"POST",header=headers,content=data))
         self.assertEquals(endpoint_response.status_code, 401)
 
+    def test_course_endpoint_method_GET_pass(self):
+        endpoint_response = course_endpoint(courseTestCase.mock_request(self,"GET"))
+        self.assertEquals(endpoint_response.status_code, 200)
+
     def test_search_course_exist(self):
         data = search_course("course").content.decode()
         self.assertTrue(data != '{"results": []}')
@@ -81,3 +89,15 @@ class courseTestCase(TestCase):
     def test_search_course_not_exist(self):
         data = search_course("xxxx").content.decode()
         self.assertTrue(data == '{"results": []}')
+
+    def test_course_id_endpoint_method_not_get(self):
+        endpoint_response = course_id_endpoint(courseTestCase.mock_request(self,"POST"),2)
+        self.assertEquals(endpoint_response.status_code, 405)
+    
+    def test_course_id_endpoint_not_exist(self):
+        endpoint_response = course_id_endpoint(courseTestCase.mock_request(self,"GET"),1)
+        self.assertEquals(endpoint_response.status_code, 404)
+
+    def test_course_id_endpoint_exist(self):
+        endpoint_response = course_id_endpoint(courseTestCase.mock_request(self,"GET"),2)
+        self.assertEquals(endpoint_response.status_code, 200)
