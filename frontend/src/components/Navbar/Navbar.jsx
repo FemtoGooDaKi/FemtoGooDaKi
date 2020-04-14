@@ -22,7 +22,6 @@ class Navbar extends Component {
 
   handleInputKeyDown = e => {
     if (e.keyCode !== 13) return;
-    console.log("enter");
     const keyword = e.target.value;
     this.props.setSearchKeyword(keyword);
     this.props.history.push("/search");

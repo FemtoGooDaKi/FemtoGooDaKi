@@ -31,8 +31,23 @@ export const courseService = {
     callback: (data: { id, status }, error) => {}
     */
     addCourse: (params, callback) => {
-        const endpoint = '/addCourse/';
-        axios.post(courseBaseUrl + endpoint, params)
+        const endpoint = '/course/';
+        const headers = { Authorization: authToken }
+        axios.post(courseBaseUrl + endpoint, params, { headers: headers })
+            .then(response => callback(response.data))
+            .catch(error => callback(null, error));
+    },
+
+    /*
+    params: {
+            query: String,
+    }
+    callback: (data: { id, status }, error) => {}
+    */
+    getKnowledge: (query, callback) => {
+        const endpoint = '/knowledge?query=' + query;
+        const headers = { Authorization: authToken }
+        axios.get(courseBaseUrl + endpoint, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
     },
@@ -47,7 +62,7 @@ export const courseService = {
     addKnowledge: (params, callback) => {
         const endpoint = '/knowledge/';
         const headers = { Authorization: authToken }
-        axios.post(courseBaseUrl + endpoint, params, {headers: headers})
+        axios.post(courseBaseUrl + endpoint, params, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
     },

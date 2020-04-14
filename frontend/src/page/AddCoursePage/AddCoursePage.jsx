@@ -4,6 +4,8 @@ import { Form, Input, Button, Select } from "antd";
 import { Tabs } from "antd";
 import { courseService } from "../../services/ServiceManager";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { message } from "antd";
+
 
 const { TabPane } = Tabs;
 const { Option } = Select;
@@ -31,6 +33,24 @@ const formItemLayoutWithOutLabel = {
 
 export default class AddCoursePage extends React.Component {
   formRef = React.createRef();
+  constructor(props) {
+    super(props);
+    this.state = { knowledge: [] };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData = () => {
+    courseService.getKnowledge("", (result, error) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      this.setState({ knowledge: result.results });
+    });
+  };
 
   onGenderChange = (value) => {
     this.formRef.current.setFieldsValue({
@@ -39,22 +59,35 @@ export default class AddCoursePage extends React.Component {
   };
 
   onFinish = (values) => {
-    console.log(values);
+    if(values.knowledge === undefined) {
+      message.error('Please add knowledge to your course')
+    }
+    values.knowledge = values.knowledge.map((k) => {
+      const kSplit = k.split('@');
+      const kid = kSplit[kSplit.length - 1];
+      return kid;
+    });
+    const params = {
+      courseName: values['Course Name'],
+      description: values['Description'],
+      knowledge_set: values['knowledge'],
+      job: values['Career']
+    }
+    courseService.addCourse(params, (result, error) => {
+      if (error) {
+        console.log(error);
+        message.error("Unable to add course");
+        return;
+      }
+      message.success("Add course succeeded");
+    });
   };
 
   onReset = () => {
     this.formRef.current.resetFields();
   };
 
-  onFill = () => {
-    this.formRef.current.setFieldsValue({
-      note: "Hello world!",
-      gender: "male",
-    });
-  };
-
   onSubmitKnowledge = (values) => {
-    console.log(values);
     //send to backend
     const obj = {
       subject: values.Subject,
@@ -63,13 +96,15 @@ export default class AddCoursePage extends React.Component {
     courseService.addKnowledge(obj, (result, error) => {
       if (error) {
         console.log(error);
+        message.error("Unable to add knowledge");
         return;
       }
-      console.log("result", result);
+      message.success("Add knowledge succeeded.");
     });
   };
 
   render() {
+    const { knowledge } = this.state;
     return (
       <Tabs defaultActiveKey="1" className="add-course-page">
         <TabPane tab="Add new course" key="1">
@@ -105,7 +140,6 @@ export default class AddCoursePage extends React.Component {
 
             <Form.List name="knowledge">
               {(fields, { add, remove }) => {
-                console.log(fields)
                 return (
                   <div>
                     {fields.map((field, index) => (
@@ -113,7 +147,7 @@ export default class AddCoursePage extends React.Component {
                         {...(index === 0
                           ? formItemLayout
                           : formItemLayoutWithOutLabel)}
-                        label={index === 0 ? "Knowledges" : ""}
+                        label={index === 0 ? "Knowledge" : ""}
                         required={true}
                         key={field.key}
                       >
@@ -124,8 +158,7 @@ export default class AddCoursePage extends React.Component {
                             {
                               required: true,
                               whitespace: true,
-                              message:
-                                "Please select knowledge in this field.",
+                              message: "Please select knowledge in this field.",
                             },
                           ]}
                           noStyle
@@ -135,14 +168,16 @@ export default class AddCoursePage extends React.Component {
                             allowClear
                             style={{ width: "60%" }}
                           >
-                            <Option value="Engineer">Engineer</Option>
-                            <Option value="Consultant">Consultant</Option>
-                            <Option value="Businessman">Businessman</Option>
-                            <Option value="Policeman">Policeman</Option>
-                            <Option value="Teacher">Teacher</Option>
-                            <Option value="Sciencetist">Sciencetist</Option>
-                            <Option value="Politician">Politician</Option>
-                            <Option value="other">other</Option>
+                            {knowledge.map((k) => {
+                              return (
+                                <Option
+                                  key={k.id}
+                                  value={`${k.subject}@${k.id}`}
+                                >
+                                  {k.subject}
+                                </Option>
+                              );
+                            })}
                           </Select>
                         </Form.Item>
                         {fields.length > 1 ? (
@@ -225,9 +260,6 @@ export default class AddCoursePage extends React.Component {
               <Button htmlType="button" onClick={this.onReset}>
                 Reset
               </Button>
-              <Button type="link" htmlType="button" onClick={this.onFill}>
-                Fill form
-              </Button>
             </Form.Item>
           </Form>
         </TabPane>
@@ -278,9 +310,6 @@ export default class AddCoursePage extends React.Component {
               </Button>
               <Button htmlType="button" onClick={this.onReset}>
                 Reset
-              </Button>
-              <Button type="link" htmlType="button" onClick={this.onFill}>
-                Fill form
               </Button>
             </Form.Item>
           </Form>

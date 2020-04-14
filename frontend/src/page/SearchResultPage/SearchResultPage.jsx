@@ -26,7 +26,6 @@ class SearchResultPage extends React.Component {
   }
 
   fetchData = (keyword) => {
-    console.log("p", this.props);
     courseService.searchCourse(keyword, (result, error) => {
       if (error) {
         console.log(error);
@@ -39,8 +38,11 @@ class SearchResultPage extends React.Component {
         console.log(error);
         return;
       }
-      console.log("r", result);
-      this.setState({ enrollCourse: result.results });
+      const enrollCourse = result.courses.reduce(
+        (total, currentValue) => total.concat(currentValue.courseName),
+        []
+      );
+      this.setState({ enrollCourse: enrollCourse });
     });
   };
 
@@ -55,7 +57,7 @@ class SearchResultPage extends React.Component {
   };
 
   render() {
-    const { searchResult } = this.state;
+    const { searchResult, enrollCourse } = this.state;
     let courseList = <div className="search-not-found"> No course found </div>;
     if (searchResult.length > 0) {
       courseList = searchResult.map((c) => {
@@ -77,7 +79,7 @@ class SearchResultPage extends React.Component {
             Continue
           </div>
         );
-        const isEnrolled = false;
+        const isEnrolled = enrollCourse.includes(c.courseName);
         const knowledgeList = c.knowledge_set
           .sort((a, b) => (a.subject > b.subject ? 1 : -1))
           .map((k) => {
