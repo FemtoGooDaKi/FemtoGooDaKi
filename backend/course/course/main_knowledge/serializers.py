@@ -6,3 +6,9 @@ class KnowledgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Knowledge
         fields = '__all__'
+
+
+class KnowledgePreviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Knowledge
+        fields = ('id', 'subject')
