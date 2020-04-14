@@ -73,6 +73,12 @@ class knowledgeTestCase(TestCase):
         endpoint_response = knowledge_endpoint(knowledgeTestCase.mock_request(self,"POST",header=headers,content=contents))
         self.assertEquals(endpoint_response.status_code, 401)
 
+    def test_knowledge_endpoint_GET_pass(self):
+        authen = self.get_token()
+        headers = {"Content-Type":"application/json","Authorization":str(authen)}
+        endpoint_response = knowledge_endpoint(knowledgeTestCase.mock_request(self,"GET",header=headers))
+        self.assertEquals(endpoint_response.status_code, 200)
+
     def test_search_knowledge_exist(self):
         data = search_knowledge("fly").content.decode()
         self.assertTrue(data != '{"results": []}')
@@ -80,21 +86,3 @@ class knowledgeTestCase(TestCase):
     def test_search_knowledge_not_exist(self):
         data = search_knowledge("xxxx").content.decode()
         self.assertTrue(data == '{"results": []}')
-    # test query still fail cuz every query return mock example
-
-    # def test_knowledge_endpoint_GET_exist(self):
-    #     authen = self.get_token()
-    #     headers = {"Content-Type":"application/json","Authorization":str(authen)}
-    #     contents = json.dumps({"query":"fly"})
-    #     request = knowledgeTestCase.mock_request(self,"GET",header=headers,content=contents)
-    #     endpoint_response = knowledge_endpoint(request)
-    #     self.assertEquals(endpoint_response.status_code, 200)
-
-    # def test_knowledge_endpoint_GET_not_exist(self):
-    #     authen = self.get_token()
-    #     headers = {"Content-Type":"application/json","Authorization":str(authen)}
-    #     contents = json.dumps({})
-    #     request = knowledgeTestCase.mock_request(self,"GET",header=headers,content=contents)
-    #     request.query = "ppp"
-    #     endpoint_response = knowledge_endpoint(request)
-    #     self.assertEquals(endpoint_response.status_code, 200)
