@@ -13,6 +13,7 @@ import AddCoursePage from './page/AddCoursePage/AddCoursePage'
 import LearnPage from './page/LearnPage/LearnPage'
 import DummyPage from './page/DummyPage/DummyPage'
 import Navbar from './components/Navbar/Navbar'
+import MyCoursePage from './page/MyCoursePage/MyCoursePage'
 import './App.css'
 
 export default function App() {
@@ -36,12 +37,7 @@ export default function App() {
 
           <Route path="/mycourse" exact>
             <Navbar />
-            <CoursePage
-              imgUrl='https://i.imgur.com/mJM1gO1.jpg'
-              name="aukmate"
-              description="!312"
-              onStartCourse={(name) => console.log(name)}
-            />
+            <MyCoursePage/>
           </Route>
 
           <Route path="/search" exact>
@@ -53,18 +49,11 @@ export default function App() {
           <Route path="/career" exact>
             <div>Career</div>
           </Route>
-
-          <Route path="/course/:id" exact>
-            <Navbar />
-            <CoursePage
-              imgUrl='https://i.imgur.com/mJM1gO1.jpg'
-              name="aukmate"
-              description="!312"
-              onStartCourse={(name) => console.log(name)}
-            />
-          </Route>
-
+          
           <Route path="/course/:id/learn" component={LearnPage}/>
+          <Route path="/course/:id" component={CoursePage}/>
+
+          
 
           <Route path="/course/:id/test">
             <div>Page to show when the user PreTest or PostTest</div>

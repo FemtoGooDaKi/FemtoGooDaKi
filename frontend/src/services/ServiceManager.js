@@ -85,7 +85,8 @@ export const enrollmentService = {
     */
     enrollCourse: (params, callback) => {
         const endpoint = '/enroll/';
-        axios.post(enrollmentBaseUrl + endpoint, params)
+        const headers = { Authorization: authToken }
+        axios.post(enrollmentBaseUrl + endpoint, params,{headers : headers})
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
     },
