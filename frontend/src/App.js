@@ -10,6 +10,7 @@ import RegisterPage from './page/RegisterPage/RegisterPage'
 import CoursePage from './page/CoursePage/CoursePage'
 import SearchResultPage from './page/SearchResultPage/SearchResultPage'
 import AddCoursePage from './page/AddCoursePage/AddCoursePage'
+import LearnPage from './page/LearnPage/LearnPage'
 import DummyPage from './page/DummyPage/DummyPage'
 import Navbar from './components/Navbar/Navbar'
 import './App.css'
@@ -63,9 +64,7 @@ export default function App() {
             />
           </Route>
 
-          <Route path="/course/:id/learn">
-            <div>Page for the user to learn</div>
-          </Route>
+          <Route path="/course/:id/learn" component={LearnPage}/>
 
           <Route path="/course/:id/test">
             <div>Page to show when the user PreTest or PostTest</div>

@@ -3,22 +3,36 @@ import './CourseNavigation.scss';
 
 /*
 interface ICourseNavigationProps {
-	name: string;
-	subject: [Subject]
-	onClick = (knowledgeName) => any
+    name = String
+    knowledges = [{subject: String, ...}]
+	onClick = (knowledge) => any
 }
 */
 
 export class CourseNavigation extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            selectedSubject: null,
+        };
+    }
+
+    selectKnowledge = (knowledge) => {
+        this.setState({ selectedSubject: knowledge.subject });
+        this.props.onClick(knowledge);
+    }
+
     render() {
         return (
             <div className='coursenav-container'>
                 <div className='coursenav-name'>{this.props.name}</div>
                 <div className='coursenav-separator'></div>
-                {this.props.subject.map((subject) => 
-                    <CourseNavigationSubject
-                    subject={subject}
-                    handleKnowledgeClick={this.props.onClick}
+                {this.props.knowledges.map((knowledge, index) => 
+                    <CourseNavigationKnowledge
+                    key={index}
+                    knowledge={knowledge}
+                    selected={this.state.selectedSubject === knowledge.subject}
+                    onClick={() => this.selectKnowledge(knowledge)}
                     />
                 )}
             </div>
@@ -26,40 +40,20 @@ export class CourseNavigation extends Component {
     }
 }
 
-class CourseNavigationSubject extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            showKnowledge: false,
-        };
-        console.log(props.subject.knowledge)
-    }
-
-    toggleKnowledge = () => {
-        this.setState({
-            showKnowledge: !this.state.showKnowledge,
-        });
-    }
-
+class CourseNavigationKnowledge extends Component {
     render() {
         return (
             <div>
-                <div className='coursenav-subject-container'>
+                <div
+                className='coursenav-subject-container'
+                style={{ backgroundColor: this.props.selected ? 'rgba(211, 211, 211, 0.25)' : 'transparent' }}
+                >
                     <div
                     className='coursenav-subject-name'
-                    onClick={this.toggleKnowledge}
+                    onClick={this.props.onClick}
                     >
-                        {this.props.subject.name}
+                        <span>{this.props.knowledge.subject}</span>
                     </div>
-                    {this.state.showKnowledge &&
-                        this.props.subject.knowledge.map((knowledge) => 
-                            <div className='coursenav-subject-knowledge'
-                            onClick={() => { this.props.handleKnowledgeClick(knowledge.name) }}
-                            >
-                                {knowledge.name}
-                            </div>
-                        )
-                    }
                 </div>
                 <div className='coursenav-separator'></div>
             </div>
