@@ -1,6 +1,7 @@
 .learn-page-container {
-  height: 100%;
+  height: calc(100% - 65px);
   width: 100%;
+  overflow: hidden;
 }
 
 .learn-page-content-container {
@@ -8,6 +9,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.learn-page-content-subject {
+  font-size: 3em;
 }
 
 .learn-page-content-description {

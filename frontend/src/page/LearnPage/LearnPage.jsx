@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { CourseNavigation } from '../../components/CourseNavigation';
 import Navbar from '../../components/Navbar/Navbar';
 import { Row, Col, message } from "antd";
+import ReactPlayer from "react-player";
 import "./LearnPage.scss";
 import "antd/dist/antd.css";
 
@@ -59,14 +60,30 @@ export default class LearnPage extends Component {
 }
 
 class LearnPageContent extends Component {
+  getContent = () => {
+    if (ReactPlayer.canPlay(this.props.knowledge.content)) {
+      return (
+        <ReactPlayer
+        url={this.props.knowledge.content}
+        controls={true}
+        width={960}
+        height={540}
+        />
+      )
+    }
+    return (
+      <div className="learn-page-content-description">
+        {this.props.knowledge.content}
+      </div>
+    )
+  }
+
   render() {
     if (!this.props.knowledge) return <div></div>
     
     return (
       <div className="learn-page-content-container">
-        <div className="learn-page-content-description">
-          {this.props.knowledge.content}
-        </div>
+        {this.getContent()}
       </div>
     );
   }
