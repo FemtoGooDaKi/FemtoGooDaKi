@@ -90,7 +90,7 @@ export default class AddCoursePage extends React.Component {
   onSubmitKnowledge = (values) => {
     //send to backend
     const obj = {
-      subject: values.Subject,
+      subject: values['Knowledge Name'],
       content: values.Content,
     };
     courseService.addKnowledge(obj, (result, error) => {
