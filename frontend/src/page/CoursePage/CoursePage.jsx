@@ -60,13 +60,12 @@ class CoursePage extends React.Component {
       username: this.props.username || localStorage.getItem("auth-user"),
       courseId: this.props.match.params.id,
     };
-    console.log(enrollData)
+    
     enrollmentService.enrollCourse(enrollData, (data, error) => {
       if (error) {
         console.log(error);
         return;
       }
-      console.log("enrollSuccess")
       this.setState({
         redirect: `/course/${this.props.match.params.id}/learn`,
       });
