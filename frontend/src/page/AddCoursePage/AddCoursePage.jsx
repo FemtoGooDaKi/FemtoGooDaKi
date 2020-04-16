@@ -254,7 +254,7 @@ export default class AddCoursePage extends React.Component {
               }
             </Form.Item>
             <Form.Item className="add-course-tail">
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" style={{ marginRight: '10px' }} htmlType="submit">
                 Submit
               </Button>
               <Button htmlType="button" onClick={this.onReset}>
@@ -305,7 +305,7 @@ export default class AddCoursePage extends React.Component {
               <Input.TextArea />
             </Form.Item>
             <Form.Item className="add-course-tail">
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" style={{ marginRight: '10px' }} htmlType="submit">
                 Submit
               </Button>
               <Button htmlType="button" onClick={this.onReset}>

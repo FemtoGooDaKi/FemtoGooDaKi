@@ -1,11 +1,10 @@
 //Yoss
-import React from 'react';
-import './MyCoursePage.css'
-import RandomPicture from '../../components/RandomPicture/RandomPicture'
+import React from "react";
+import "./MyCoursePage.css";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import {enrollmentService} from '../../services/ServiceManager'
-import {Card} from '../../components/Card/Card'
+import { enrollmentService } from "../../services/ServiceManager";
+import { Card } from "../../components/Card/Card";
 /*
 <CoursePage
     imgUrl: string;
@@ -16,69 +15,68 @@ import {Card} from '../../components/Card/Card'
 */
 
 class MyCoursePage extends React.Component {
-
-
   constructor(props) {
     super(props);
     this.state = {
-      redirect: '',
-      courses : [],
+      redirect: "",
+      courses: [],
     };
   }
 
   componentDidMount = () => {
-    //   this.setState({
-    //     knowledge : [{id : 0,knowledgeName:"Lesson 1",description : "How To Make Omelette"},{id : 1,knowledgeName:"Lesson 2",description : "How To Ride Bycicle"},{id : 2,knowledgeName:"Lesson 3",description : "How To Clear Terminal"}]
-    //   })
-       this.getMyCourse()
-  }
+    this.getMyCourse();
+  };
 
   getMyCourse = () => {
-      //Get Description
-      const username = this.props.username;
-      enrollmentService.getEnrollCourse("chain",(data,error) => {
-            if(error){
-              console.log(error)
-              return;
-            }
-            this.setState({courses : data.courses})
-      });
-  }
+    //Get Description
+    const username = localStorage.getItem("auth-user");
+    enrollmentService.getEnrollCourse(username, (data, error) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      this.setState({ courses: data.courses });
+    });
+  };
 
   joinCourse = (courseId) => {
-    this.setState({redirect : `/course/${courseId}/learn`})
-  }
+    this.setState({ redirect: `/course/${courseId}/learn` });
+  };
 
   expandedElement = (knowledge_set) => {
-      if(knowledge_set.length > 0){
-        return knowledge_set.map((knowledge) => {
-                  return <p style = {{fontSize : "30px"}}>{knowledge.subject}</p>
-           })
-      }
-     
-  }
+    if (knowledge_set.length > 0) {
+      return knowledge_set.map((knowledge) => {
+        return <p style={{ fontSize: "30px" }}>{knowledge.subject}</p>;
+      });
+    }
+  };
 
   render() {
-    if(this.state.redirect != ''){
+    if (this.state.redirect !== "") {
       return <Redirect to={this.state.redirect} />;
-    }
-    else {
+    } else {
       return (
-        <div className='course-page-container'>
-          <p className='header'>My Course</p>
+        <div className="my-course-page-container">
+          <p className="header">My Course</p>
           <div>
             {this.state.courses.map((course) => {
-               return (
-                <div style = {{marginBottom : '10px'}}>
-                <Card
+              return (
+                <div style={{ marginBottom: "20px" }}>
+                  <Card
                     title={course.courseName}
                     subtitle={course.description}
-                    imgUrl={"https://image.freepik.com/free-photo/modern-glass-desk-interior-with-computer-devices-3d-rendering_117023-333.jpg"}
                     expandedElement={this.expandedElement(course.knowledge_set)}
-                    buttonElement = {<button className = 'joinCourse' onClick = {() => this.joinCourse(course.id)}> Join </button>}
+                    buttonElement={
+                      <button
+                        className="continueCourse"
+                        onClick={() => this.joinCourse(course.id)}
+                      >
+                        Continue
+                      </button>
+                    }
                   />
-                  </div>
-               )
+                </div>
+              );
             })}
           </div>
         </div>
@@ -87,9 +85,9 @@ class MyCoursePage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   username: state.username,
-  userId : state.userId
+  userId: state.userId,
 });
 
 export default connect(mapStateToProps)(MyCoursePage);

@@ -53,8 +53,6 @@ export default function App() {
           <Route path="/course/:id/learn" component={LearnPage}/>
           <Route path="/course/:id" component={CoursePage}/>
 
-          
-
           <Route path="/course/:id/test">
             <div>Page to show when the user PreTest or PostTest</div>
           </Route>

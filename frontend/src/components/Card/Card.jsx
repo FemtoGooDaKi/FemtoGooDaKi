@@ -10,7 +10,6 @@ const { Panel } = Collapse;
 /*
 <Card
     className: string;
-    imgUrl: string;
     title: string
     titleElement: React.ReactNode
     subtitle: string
@@ -22,7 +21,6 @@ const { Panel } = Collapse;
 /* <Card
 title={'Lighthouse Course'}
 subtitle={'How to lighthouse your friends'}
-imgUrl={"https://image.freepik.com/free-photo/modern-glass-desk-interior-with-computer-devices-3d-rendering_117023-333.jpg"}
 expandedElement={<div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div><div>XXX</div></div>}
 /> */
 
@@ -59,7 +57,6 @@ export class Card extends Component {
           }}
         >
           <div style={{ display: "flex" }}>
-            {/* <img src={imgUrl} className={"mycard-image"} alt={"Error"} /> */}
             <RandomPicture className={"mycard-image"}/>
             <div className={"mycard-title-container"}>
               <div className={"mycard-title"}>

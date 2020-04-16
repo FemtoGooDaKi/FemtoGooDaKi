@@ -1,68 +1,74 @@
 .course-page-container {
-    width: 80%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 10%;
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10%;
+  margin-top: 40px;
 }
 
 .startCourse {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    margin-left: 5%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: space-around;
 }
 
 .description {
-    display: flex;
-    flex-direction: column;
-    margin-top : 5%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5%;
 }
 
-.course-page-container> div > div > img {
-    min-width: 200px;
-    width : 200px;
-    height: 200px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.course-page-container > div > div > img {
+  min-width: 200px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.course-page-container > div > div  {
-    width: 1200px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-    padding-top : 2%;
-    margin-left: 2%;
+.course-page-container > div > div {
+  width: 1200px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 2%;
+  margin-left: 2%;
 }
 
 input:focus {
-    outline: none;
+  outline: none;
 }
 
 .startCourseButton {
-    font-size: 2em;
-    margin: 8px 0;
-    padding: 5px;
-    width: 200px;
-    height: 80px;
-    background-color: #00A3C7;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    margin-Top : 20;
-    font-weight: 500;
-    transition: 0.1s ease-in-out;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  font-size: 2em;
+  margin: 8px 0;
+  padding: 5px;
+  width: 200px;
+  height: 80px;
+  background-color: #00a3c7;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  margin-top: 20;
+  font-weight: 500;
+  transition: 0.1s ease-in-out;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
-    
+
 .header {
-    font-size: 4em;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    margin-bottom: 0;
+  font-size: 4em;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin-bottom: 0;
+}
+
+.course-page-picture > img {
+  border-radius: 4px;
 }

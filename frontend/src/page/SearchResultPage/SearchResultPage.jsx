@@ -6,7 +6,6 @@ import {
   courseService,
   enrollmentService,
 } from "../../services/ServiceManager";
-import RandomPicture from "../../components/RandomPicture/RandomPicture";
 import "./SearchResultPage.scss";
 
 class SearchResultPage extends React.Component {
@@ -33,17 +32,20 @@ class SearchResultPage extends React.Component {
       }
       this.setState({ searchResult: result.results });
     });
-    enrollmentService.getEnrollCourse(this.props.username, (result, error) => {
-      if (error) {
-        console.log(error);
-        return;
+    enrollmentService.getEnrollCourse(
+      this.props.username || localStorage.getItem("auth-user"),
+      (result, error) => {
+        if (error) {
+          console.log(error);
+          return;
+        }
+        const enrollCourse = result.courses.reduce(
+          (total, currentValue) => total.concat(currentValue.courseName),
+          []
+        );
+        this.setState({ enrollCourse: enrollCourse });
       }
-      const enrollCourse = result.courses.reduce(
-        (total, currentValue) => total.concat(currentValue.courseName),
-        []
-      );
-      this.setState({ enrollCourse: enrollCourse });
-    });
+    );
   };
 
   handleJoin = (e) => {
@@ -85,9 +87,6 @@ class SearchResultPage extends React.Component {
           .map((k) => {
             return (
               <div className="knowledge-card" key={"k" + k.id}>
-                <div className="knowledge-picture">
-                  <RandomPicture />
-                </div>
                 <span>{k.subject}</span>
               </div>
             );

@@ -9,7 +9,7 @@ import {
   FileAddFilled,
   ExportOutlined
 } from "@ant-design/icons";
-import { setSearchKeyword, setLoginFlag } from "../../actions";
+import { setSearchKeyword, setLoginFlag, setUsername } from "../../actions";
 import "./Navbar.scss";
 
 class Navbar extends Component {
@@ -53,7 +53,9 @@ class Navbar extends Component {
 
   handleLogout = () => {
     localStorage.removeItem('auth');
+    localStorage.removeItem('auth-user');
     this.props.setLoginFlag(false);
+    this.props.setUsername('');
     this.props.history.push("/");
   }
 
@@ -120,7 +122,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   setLoginFlag: flag => dispatch(setLoginFlag(flag)),
-  setSearchKeyword: keyword => dispatch(setSearchKeyword(keyword))
+  setSearchKeyword: keyword => dispatch(setSearchKeyword(keyword)),
+  setUsername: username => dispatch(setUsername(username))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Navbar));

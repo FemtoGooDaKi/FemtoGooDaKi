@@ -60,7 +60,6 @@ export default class LearnPage extends Component {
 
 class LearnPageContent extends Component {
   render() {
-    console.log(this.props.knowledge);
     if (!this.props.knowledge) return <div></div>
     
     return (

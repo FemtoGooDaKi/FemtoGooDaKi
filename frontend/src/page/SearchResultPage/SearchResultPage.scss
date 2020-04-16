@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Merriweather&display=swap");
 
 .search-result-page {
   padding: 40px 15%;
 }
 
 .search-result-title {
-  font-family: 'Merriweather', serif;
+  font-family: "Merriweather", serif;
   font-size: 4em;
   display: flex;
   align-items: center;
@@ -20,18 +20,18 @@
 
 .search-result-join {
   font-family: Roboto;
-  font-size: 3em;
+  font-size: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: #00a3c7;
-  border: 4px solid #00a3c7;
+  border: 3px solid #00a3c7;
   border-radius: 8px;
-  width: 250px;
-  height: 100px;
   transition: 0.2s ease-out;
-
+  padding: 20px 50px 20px 50px;
+  width: 217px;
+  height: 68px;
   &:hover {
     filter: brightness(125%);
   }
@@ -39,16 +39,15 @@
 
 .search-result-continue {
   font-family: Roboto;
-  font-size: 3em;
+  font-size: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: #23a873;
-  border: 4px solid #23a873;
+  border: 3px solid #23a873;
+  padding: 20px 50px 20px 50px;
   border-radius: 8px;
-  width: 250px;
-  height: 100px;
   transition: 0.2s ease-out;
 
   &:hover {

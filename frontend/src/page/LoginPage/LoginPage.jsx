@@ -52,6 +52,7 @@ class LoginPage extends React.Component {
       this.props.setUsername(username);
       this.props.setLoginFlag(true);
       localStorage.setItem("auth", authToken);
+      localStorage.setItem("auth-user",username);
       this.setState({ redirect: "/mycourse" });
     });
   };
