@@ -60,6 +60,7 @@ class CoursePage extends React.Component {
       username: this.props.username || localStorage.getItem("auth-user"),
       courseId: this.props.match.params.id,
     };
+    
     enrollmentService.enrollCourse(enrollData, (data, error) => {
       if (error) {
         console.log(error);

@@ -5,7 +5,9 @@ import axios from 'axios';
 const courseBaseUrl = 'https://femtogudaki-backend-course-op3ovi357a-an.a.run.app';
 const enrollmentBaseUrl = 'https://femtogudaki-backend-course-op3ovi357a-an.a.run.app';
 const userBaseUrl = 'https://femtogudaki-backend-user-op3ovi357a-an.a.run.app';
-const authToken = localStorage.getItem('auth');
+const authToken = () => {
+    return localStorage.getItem('auth');
+}
 
 export const courseService = {
     /*
@@ -31,7 +33,7 @@ export const courseService = {
     */
     addCourse: (params, callback) => {
         const endpoint = '/course/';
-        const headers = { Authorization: authToken }
+        const headers = { Authorization: authToken() }
         axios.post(courseBaseUrl + endpoint, params, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
@@ -45,7 +47,7 @@ export const courseService = {
     */
     getKnowledge: (query, callback) => {
         const endpoint = '/knowledge?query=' + query;
-        const headers = { Authorization: authToken }
+        const headers = { Authorization: authToken() }
         axios.get(courseBaseUrl + endpoint, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
@@ -60,7 +62,7 @@ export const courseService = {
     */
     addKnowledge: (params, callback) => {
         const endpoint = '/knowledge/';
-        const headers = { Authorization: authToken }
+        const headers = { Authorization: authToken() }
         axios.post(courseBaseUrl + endpoint, params, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
@@ -85,7 +87,7 @@ export const enrollmentService = {
     */
     enrollCourse: (params, callback) => {
         const endpoint = '/enroll/';
-        const headers = { Authorization: authToken }
+        const headers = { Authorization: authToken() }
         axios.post(enrollmentBaseUrl + endpoint, params,{headers : headers})
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
@@ -106,7 +108,7 @@ export const userService = {
     */
     getUserDetail: (username, callback) => {
         const endpoint = '/user/' + username + '/';
-        const headers = { Authorization: authToken }
+        const headers = { Authorization: authToken() }
         axios.get(userBaseUrl + endpoint, { headers: headers })
             .then(response => callback(response.data))
             .catch(error => callback(null, error));
@@ -119,7 +121,7 @@ export const userService = {
     */
     updateUserDetail: (username, params, callback) => {
         const endpoint = '/user/' + username + '/';
-        const headers = { Authorization: authToken }
+        const headers = { Authorization: authToken() }
         axios.put(userBaseUrl + endpoint, params, { headers: headers })
             .then(response => callback(null))
             .catch(error => callback(error));
@@ -131,7 +133,7 @@ export const userService = {
     */
     deleteUser: (username, callback) => {
         const endpoint = '/user/' + username + '/';
-        const headers = { Authorization: authToken }
+        const headers = { Authorization: authToken() }
         axios.delete(userBaseUrl + endpoint, { headers: headers })
             .then(response => callback(null))
             .catch(error => callback(error));
@@ -157,7 +159,7 @@ export const userService = {
 
     /*
     params: { username: String, password: String }
-    callback: (authToken, error) => {}
+    callback: (authToken(), error) => {}
     */
     login: (params, callback) => {
         const endpoint = '/login/';
